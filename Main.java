@@ -10,5 +10,7 @@ public class Main
 		Stopwatch timer = new Stopwatch();
 		b.solve();
 		System.out.println(timer.elapsedTime());
+		
+		b.fancyPrint();
 	}
 }
