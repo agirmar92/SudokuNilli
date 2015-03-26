@@ -3,7 +3,7 @@ package Sudoku;
 public class Board
 {
 	int[][] board;
-	int dim = 3;
+	int dim = 5;
 	
 	int counter = 0;
 	
@@ -42,10 +42,10 @@ public class Board
 	{
 		for (int i = 0; i < dim*dim; i++)
 		{
-			if (i % 3 == 0) System.out.println("-------------------");
+			if (i % dim == 0) printEdge(2 * dim * dim + 1);
 			for (int j = 0; j < dim*dim; j++)
 			{
-				if (j % 3 == 0) System.out.print("|");
+				if (j % dim == 0) System.out.print("|");
 				else System.out.print(" ");
 				System.out.print(board[i][j]);
 			}
@@ -53,7 +53,7 @@ public class Board
 			System.out.println();
 			
 		}
-		System.out.println("-------------------");
+		printEdge(2 * dim * dim + 1);
 		System.out.println();
 	}
 	
@@ -71,13 +71,13 @@ public class Board
 			if (board[i][y] > 0) if (test.insert(board[i][y])) return false;
 		}
 		test.clear();
-		int box_x = x / 3;
-		int box_y = y / 3;
+		int box_x = x / dim;
+		int box_y = y / dim;
 		for (int i = 0; i < dim; i++)
 		{
 			for (int j = 0; j < dim; j++)
 			{
-				if (board[box_x+i][box_y+j] > 0) if (test.insert(board[box_x + i][box_y + j])) return false;
+				if (board[dim * box_x+i][dim * box_y+j] > 0) if (test.insert(board[dim * box_x + i][dim * box_y + j])) return false;
 			}
 		}
 		test.clear();
@@ -88,10 +88,11 @@ public class Board
 	// in progress
 	public boolean solve()
 	{
-		//if (++counter % 5000 == 0) fancyPrint();
+		//fancyPrint();
 		//System.out.println("solve");
 		if (full()) 
 		{
+			System.out.println("SOLVED");
 			fancyPrint();
 			return true;
 		}
@@ -101,10 +102,9 @@ public class Board
 		{
 			for (j = 0; j < dim*dim; j++) if (board[i][j] == 0) break search;
 		}
-		if (i > 3) System.out.println(i + " " + j);
-		for (int n = 1; n <= 9; n++)
+		for (int n = 1; n <= dim*dim; n++)
 		{
-			//System.out.println("val " + n);
+			//System.out.println("consider " + i + " " + j + " val " + n);
 			put(i, j, n);
 			if (isValid(i, j))
 			{
@@ -143,5 +143,10 @@ public class Board
 		{
 			for (int i = 0; i < set.length; i++) set[i] = false;
 		}
+	}
+	private void printEdge(int n)
+	{
+		for (int i = 0; i < n; i++) System.out.print("-");
+		System.out.println();
 	}
 }
