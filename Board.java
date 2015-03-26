@@ -3,13 +3,18 @@ package Sudoku;
 public class Board
 {
 	int[][] board;
-	int dim = 5;
+	int dim = 3;
 	
 	int counter = 0;
 	
 	public Board()
 	{
 		board = new int[dim*dim][dim*dim];
+	}
+	
+	public Board(int[][] boardToSolve)
+	{
+		board = boardToSolve;
 	}
 	
 	public boolean put(int x, int y, int val)
@@ -42,18 +47,18 @@ public class Board
 	{
 		for (int i = 0; i < dim*dim; i++)
 		{
-			if (i % dim == 0) printEdge(2 * dim * dim + 1);
+			if (i % dim == 0) printEdge(2 * dim * dim + 7);
 			for (int j = 0; j < dim*dim; j++)
 			{
-				if (j % dim == 0) System.out.print("|");
+				if (j % dim == 0) System.out.print(" | ");
 				else System.out.print(" ");
 				System.out.print(board[i][j]);
 			}
-			System.out.print("|");
+			System.out.print(" |");
 			System.out.println();
 			
 		}
-		printEdge(2 * dim * dim + 1);
+		printEdge(2 * dim * dim + 7);
 		System.out.println();
 	}
 	
@@ -143,6 +148,7 @@ public class Board
 	}
 	private void printEdge(int n)
 	{
+		System.out.print(" ");
 		for (int i = 0; i < n; i++) System.out.print("-");
 		System.out.println();
 	}
