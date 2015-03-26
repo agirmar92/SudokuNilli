@@ -1,5 +1,7 @@
 package Sudoku;
 
+import java.util.Random;
+
 public class Generator {
 	static int[][] board;
 	int dim;
@@ -39,6 +41,12 @@ public class Generator {
 		}
 		
 		return board;
+	}
+	
+	public static int[][] getHardBoard() {
+		Random randNum = new Random();
+		HardBoard hb = new HardBoard();
+		return hb.getBoard(randNum.nextInt(10) + 1);
 	}
 
 }
