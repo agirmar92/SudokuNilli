@@ -3,7 +3,7 @@ package Sudoku;
 public class Board
 {
 	int[][] board;
-	int dim = 3;
+	int dim = 5;
 	
 	int counter = 0;
 	
