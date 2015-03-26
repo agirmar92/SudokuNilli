@@ -4,13 +4,13 @@ public class Main
 {
 	static public void main(String[] args)
 	{
-		int[][] board2 = Generator.getBoard(4); 
-		Board b2 = new Board(board2, 4);
+		int[][] board4 = Generator.getBoard4(); 
+		Board b4 = new Board(board4, 4);
 		
-		b2.fancyPrint();
+		b4.fancyPrint();
 		
 		Stopwatch timer2 = new Stopwatch();
-		b2.solve();
+		b4.solve();
 		System.out.println(timer2.elapsedTime());
 
 		int[][] board = Generator.getHardBoard(); 
