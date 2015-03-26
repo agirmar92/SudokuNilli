@@ -3,18 +3,23 @@ package Sudoku;
 public class Board
 {
 	int[][] board;
-	int dim = 3;
+	int dim;
 	
 	int counter = 0;
 	
-	public Board()
+	public Board(int d)
 	{
 		board = new int[dim*dim][dim*dim];
+		dim = d;
+		for (int i = 0; i < dim*dim; i++)
+			for (int j = 0; j < dim*dim; j++)
+				board[i][j] = -1;
 	}
 	
-	public Board(int[][] boardToSolve)
+	public Board(int[][] boardToSolve, int d)
 	{
 		board = boardToSolve;
+		dim = d;
 	}
 	
 	public boolean put(int x, int y, int val)
@@ -115,8 +120,8 @@ public class Board
 			{
 				if(solve()) return true;
 			}
-			put(i, j, 0);
 		}
+		put(i, j, 0);
 		return false;
 	}
 	
