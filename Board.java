@@ -12,6 +12,11 @@ public class Board
 		board = new int[dim*dim][dim*dim];
 	}
 	
+	public Board(int[][] boardToSolve)
+	{
+		board = boardToSolve;
+	}
+	
 	public boolean put(int x, int y, int val)
 	{
 		if (x >= dim*dim || y >= dim*dim || x < 0 || y < 0 || val > dim*dim) return false;
@@ -42,18 +47,18 @@ public class Board
 	{
 		for (int i = 0; i < dim*dim; i++)
 		{
-			if (i % 3 == 0) System.out.println("-------------------");
+			if (i % 3 == 0) System.out.println(" -------------------------");
 			for (int j = 0; j < dim*dim; j++)
 			{
-				if (j % 3 == 0) System.out.print("|");
+				if (j % 3 == 0) System.out.print(" | ");
 				else System.out.print(" ");
 				System.out.print(board[i][j]);
 			}
-			System.out.print("|");
+			System.out.print(" |");
 			System.out.println();
 			
 		}
-		System.out.println("-------------------");
+		System.out.println(" -------------------------");
 		System.out.println();
 	}
 	
