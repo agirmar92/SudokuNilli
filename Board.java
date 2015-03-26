@@ -3,8 +3,7 @@ package Sudoku;
 public class Board
 {
 	int[][] board;
-	int dim;
-	
+	int dim;	
 	int counter = 0;
 	
 	public Board(int d)
@@ -98,7 +97,7 @@ public class Board
 	// in progress
 	public boolean solve()
 	{
-		//fancyPrint();
+		if (++counter % 50000 == 0) fancyPrint();
 		//System.out.println("solve");
 		if (full()) 
 		{
@@ -124,9 +123,6 @@ public class Board
 		put(i, j, 0);
 		return false;
 	}
-	
-	
-	
 	
 	static public class DistinctSet
 	{
