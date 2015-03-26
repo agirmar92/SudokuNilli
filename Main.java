@@ -51,8 +51,8 @@ public class Main
 		System.out.println(b.put(2, 0, 2));
 		b.fancyPrint();
 		System.out.println(b.put(0, 3, 9));
-		b.fancyPrint();*/
-/*		b.put(0, 0, 1);
+		b.fancyPrint();
+		b.put(0, 0, 1);
 		b.put(0, 1, 2);
 		b.put(0, 2, 3);
 		b.put(0, 3, 4);
@@ -60,9 +60,11 @@ public class Main
 		b.put(0, 5, 6);
 		b.put(0, 6, 7);
 		b.put(0, 7, 8);
-		b.put(0, 8, 9);
-*/		
+		b.put(0, 8, 9);*/
+		Stopwatch timer = new Stopwatch();
 		b.solve();
+		System.out.println(timer.elapsedTime());
+		
 		b.fancyPrint();
 		
 	}
