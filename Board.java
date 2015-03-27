@@ -10,9 +10,6 @@ public class Board
 	{
 		board = new int[dim*dim][dim*dim];
 		dim = d;
-		for (int i = 0; i < dim*dim; i++)
-			for (int j = 0; j < dim*dim; j++)
-				board[i][j] = -1;
 	}
 	
 	public Board(int[][] boardToSolve, int d)
@@ -49,20 +46,23 @@ public class Board
 	
 	public void fancyPrint()
 	{
+		int extraEdge = 7;
+		if (dim == 4) extraEdge = 25;
 		for (int i = 0; i < dim*dim; i++)
 		{
-			if (i % dim == 0) printEdge(2 * dim * dim + 7);
+			if (i % dim == 0) printEdge(2 * dim * dim + extraEdge);
 			for (int j = 0; j < dim*dim; j++)
 			{
 				if (j % dim == 0) System.out.print(" | ");
 				else System.out.print(" ");
+				if (dim == 4) if (0 <= board[i][j] && board[i][j] < 10) System.out.print(" "); 
 				System.out.print(board[i][j]);
 			}
 			System.out.print(" |");
 			System.out.println();
 			
 		}
-		printEdge(2 * dim * dim + 7);
+		printEdge(2 * dim * dim + extraEdge);
 		System.out.println();
 	}
 	
