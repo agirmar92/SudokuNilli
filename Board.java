@@ -2,17 +2,17 @@ package Sudoku;
 
 public class Board
 {
-	int[][] board;
+	Variable[][] board;
 	int dim;	
 	int counter = 0;
 	
 	public Board(int d)
 	{
-		board = new int[dim*dim][dim*dim];
 		dim = d;
+		board = new Variable[dim*dim][dim*dim];
 	}
 	
-	public Board(int[][] boardToSolve, int d)
+	public Board(Variable[][] boardToSolve, int d)
 	{
 		board = boardToSolve;
 		dim = d;
@@ -21,15 +21,18 @@ public class Board
 	public boolean put(int x, int y, int val)
 	{
 		if (x >= dim*dim || y >= dim*dim || x < 0 || y < 0 || val > dim*dim) return false;
-		board[x][y] = val;
-		return isValid(x, y);
+		if (isValid(x, y)) {
+			board[x][y] = new Variable(dim, val, x, y);
+			return true;
+		}
+		return false;
 	}
 	
 	public boolean full()
 	{
 		for (int i = 0; i < dim*dim; i++)
 		{
-			for (int j = 0; j < dim*dim; j++) if (board[i][j] == 0) return false;
+			for (int j = 0; j < dim*dim; j++) if (board[i][j] == null) return false;
 		}
 		return true;
 	}
@@ -38,7 +41,12 @@ public class Board
 	{
 		for (int i = 0; i < dim*dim; i++)
 		{
-			for (int j = 0; j < dim*dim; j++) System.out.print(board[i][j] + " ");
+			for (int j = 0; j < dim*dim; j++) {
+				if (board[i][j] == null)
+					System.out.print(0 + " ");
+				else
+					System.out.print(board[i][j].val + " ");
+			}
 			System.out.println();
 		}
 		System.out.println();
@@ -55,8 +63,9 @@ public class Board
 			{
 				if (j % dim == 0) System.out.print(" | ");
 				else System.out.print(" ");
-				if (dim == 4) if (0 <= board[i][j] && board[i][j] < 10) System.out.print(" "); 
-				System.out.print(board[i][j]);
+				if (dim == 4) if (0 <= board[i][j].val && board[i][j].val < 10) System.out.print(" "); 
+				if (board[i][j] != null)
+					System.out.print(board[i][j].val);
 			}
 			System.out.print(" |");
 			System.out.println();
@@ -72,12 +81,14 @@ public class Board
 		DistinctSet test = new DistinctSet(dim*dim);
 		for (int i = 0; i < dim*dim; i++)
 		{
-			if (board[x][i] > 0) if (test.insert(board[x][i])) return false;
+			if (board[x][i] != null)
+				if (board[x][i].val > 0) if (test.insert(board[x][i].val)) return false;
 		}
 		test.clear();
 		for (int i = 0; i < dim*dim; i++)
 		{
-			if (board[i][y] > 0) if (test.insert(board[i][y])) return false;
+			if (board[i][y] != null)
+				if (board[i][y].val > 0) if (test.insert(board[i][y].val)) return false;
 		}
 		test.clear();
 		int box_x = x / dim;
@@ -86,7 +97,8 @@ public class Board
 		{
 			for (int j = 0; j < dim; j++)
 			{
-				if (board[dim * box_x+i][dim * box_y+j] > 0) if (test.insert(board[dim * box_x + i][dim * box_y + j])) return false;
+				if (board[dim * box_x+i][dim * box_y+j] != null)
+					if (board[dim * box_x+i][dim * box_y+j].val > 0) if (test.insert(board[dim * box_x + i][dim * box_y + j].val)) return false;
 			}
 		}
 		test.clear();
@@ -109,7 +121,7 @@ public class Board
 		search:
 		for (i = 0; i < dim*dim; i++)
 		{
-			for (j = 0; j < dim*dim; j++) if (board[i][j] == 0) break search;
+			for (j = 0; j < dim*dim; j++) if (board[i][j] == null) break search;
 		}
 		for (int n = 1; n <= dim*dim; n++)
 		{
@@ -155,5 +167,9 @@ public class Board
 		System.out.print(" ");
 		for (int i = 0; i < n; i++) System.out.print("-");
 		System.out.println();
+	}
+	
+	public void removeVariable(int x, int y) {
+		board[x][y] = null;
 	}
 }
