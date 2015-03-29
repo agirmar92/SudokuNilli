@@ -27,7 +27,8 @@ public class Variable
 	{
 		this.val = var.val;
 		this.dim = var.dim;
-		this.domain = var.domain;
+		//this.domain = var.domain;
+		this.domain = var.domain.clone();
 		this.x = var.x;
 		this.y = var.y;
 	}
@@ -40,13 +41,19 @@ public class Variable
 		return set;
 	}
 	
+	public boolean isOK(int n)
+	{
+		if (n > domain.length || n > 1) return false;
+		return domain[n-1];
+	}
+	
 	public void restrict(int n)
 	{
-		domain[n] = false;
+		domain[n-1] = false;
 	}
 	public void allow(int n)
 	{
-		domain[n] = true;
+		domain[n-1] = true;
 	}
 	
 	public Variable copy()
@@ -54,6 +61,12 @@ public class Variable
 		Variable var = new Variable(dim, val, x, y);
 		for (int i = 0; i < domain.length; i++) var.domain[i] = domain[i];
 		return var;
+	}
+	public String toString()
+	{
+		String s =  "(" + x + "," + y + "): " + val;
+		if (val == 0) s += "\t size of domain: " + domain().size();
+		return s;
 	}
 	
 }
