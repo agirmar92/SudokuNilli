@@ -11,6 +11,7 @@ public class Main
 		
 		Stopwatch timer2 = new Stopwatch();
 		b4.solve();
+<<<<<<< HEAD
 		System.out.println(timer2.elapsedTime());
 		b4.fancyPrint();*/
 
@@ -30,6 +31,19 @@ public class Main
 		Stopwatch timer = new Stopwatch();
 		v.solve();
 		System.out.println(timer.elapsedTime());
+		/*System.out.println(timer2.elapsedTime());*/
+		
+
+		/*Variable[][] board = Generator.getHardBoard(); 
+		Board b = new Board(board, 3);
+		b.fancyPrint();
+		Stopwatch timer = new Stopwatch();
+		b.solve();
+		System.out.println(timer.elapsedTime());*/
+		
+		Generator gen = new Generator(3);
+		Board randomBoard = gen.getRandomBoard();
+		randomBoard.fancyPrint();
 		
 	}
 }

@@ -1,10 +1,16 @@
 package Sudoku;
 
+import java.lang.reflect.Constructor;
 import java.util.Random;
+
 
 public class Generator {
 	static int[][] board;
-	int dim;
+	static int dim;
+	
+	public Generator(int d) {
+		dim = d;
+	}
 	
 	static public int[][] getBoard4()
 	{
@@ -34,6 +40,43 @@ public class Generator {
 		Random randNum = new Random();
 		HardBoard hb = new HardBoard();
 		return hb.getBoard(randNum.nextInt(10) + 1);
+	}
+	
+	public Board getRandomBoard() {
+		Board board = new Board(dim);
+		Random rand = new Random();
+		int[][] valids = new int[2][20];
+		// Fill an empty board with 20 random numbers in random positions.
+		for (int i = 0; i < 20; i++) {
+			int x, y, value;
+			do {
+				x = rand.nextInt(dim*dim); 
+				y = rand.nextInt(dim*dim);
+				value = rand.nextInt(dim*dim) + 1;
+			} while (!board.put(x, y, value));
+			valids[0][i] = x;
+			valids[1][i] = y;
+		}
+		Board cpy = board;
+		// Check if the board has a solution.
+		if (!cpy.solve()) {
+			do {
+				int toRemove = rand.nextInt(20);
+				board.removeVariable(valids[0][toRemove], valids[1][toRemove]);
+				int x, y, value;
+				do {
+					x = rand.nextInt(dim*dim); 
+					y = rand.nextInt(dim*dim);
+					value = rand.nextInt(dim*dim) + 1;
+				} while (!board.put(x, y, value));
+				valids[0][toRemove] = x;
+				valids[1][toRemove] = y;
+				
+				cpy = board;
+			} while (!cpy.solve()); /* loop until we've got a solveable board */
+		}
+		
+		return board;
 	}
 
 }
