@@ -40,7 +40,7 @@ public class Main
 		b.solve();
 		System.out.println(timer.elapsedTime());*/
 		
-		Generator gen = new Generator(3);
+		Generator gen = new Generator(4);
 		VarBoard randomBoard = gen.getRandomBoard();
 		randomBoard.fancyPrint();
 

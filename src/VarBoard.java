@@ -176,7 +176,8 @@ public class VarBoard
 		{
 			for (j = 0; j < dim*dim; j++) if (board[i][j].val == 0) break search;
 		}
-		for (int n = 1; n <= dim*dim; n++)
+		int n;
+		for (n = 1; n <= dim*dim; n++)
 		{
 			put(i, j, n);
 			if (isValid(i, j))
@@ -184,6 +185,7 @@ public class VarBoard
 				if(solve()) return true;
 			}
 		}
+		System.out.println("Couldn't put " + n + " at [" + i + ", " + j + "]");
 		put(i, j, 0);
 		return false;
 	}
