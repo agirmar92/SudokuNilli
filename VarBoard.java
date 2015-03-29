@@ -12,6 +12,13 @@ public class VarBoard
 	{
 		dim = d;
 		board = new Variable[dim*dim][dim*dim];
+		for (int i = 0; i < dim*dim; i++)
+		{
+			for (int j = 0; j < dim*dim; j++)
+			{
+				board[i][j] = new Variable(dim, 0, i, j);
+			}
+		}
 	}
 	
 	public VarBoard(int[][] boardToSolve, int d)

@@ -50,14 +50,16 @@ public class Generator {
 		for (int i = 0; i < 20; i++) {
 			int x, y, value;
 			do {
-				x = rand.nextInt(dim*dim); 
-				y = rand.nextInt(dim*dim);
-				value = rand.nextInt(dim*dim) + 1;
+				do {
+					x = rand.nextInt(dim*dim); 
+					y = rand.nextInt(dim*dim);
+					value = rand.nextInt(dim*dim) + 1;
+				} while (board.board[x][y] != null);
 			} while (!board.put(x, y, value));
 			valids[0][i] = x;
 			valids[1][i] = y;
 		}
-		Board cpy = board;
+		Board cpy = board.copy();
 		// Check if the board has a solution.
 		if (!cpy.solve()) {
 			do {
@@ -72,7 +74,7 @@ public class Generator {
 				valids[0][toRemove] = x;
 				valids[1][toRemove] = y;
 				
-				cpy = board;
+				cpy = board.copy();
 			} while (!cpy.solve()); /* loop until we've got a solveable board */
 		}
 		
