@@ -22,6 +22,15 @@ public class Variable
 		this.x = x;
 		this.y = y;
 	}
+
+	public Variable(Variable var)
+	{
+		this.val = var.val;
+		this.dim = var.dim;
+		this.domain = var.domain;
+		this.x = var.x;
+		this.y = var.y;
+	}
 	
 	public Collection<Integer> domain()
 	{
