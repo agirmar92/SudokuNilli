@@ -3,7 +3,7 @@ package Sudoku;
 import java.lang.reflect.Constructor;
 import java.util.*;
 
-import aima.core.util.datastructure.Pair;
+//import aima.core.util.datastructure.Pair;
 
 
 public class Generator {
@@ -45,7 +45,7 @@ public class Generator {
 		return hb.getBoard(randNum.nextInt(10) + 1);
 	}
 	
-	public VarBoard getRandomBoard() {
+	/*public VarBoard getRandomBoard() {
 		VarBoard board = new VarBoard(dim);
 		VarBoard cpy;
 		Random rand = new Random();
@@ -81,7 +81,7 @@ public class Generator {
 		return board;
 	}
 
-	
+	*/
 	static int [][][] board3 = {{{0, 0, 0, 0, 0, 2, 0, 0, 6}, 
 		{0, 4, 0, 0, 9, 0, 0, 0, 8}, 
 		{0, 0, 0, 5, 0, 0, 4, 3, 0}, 

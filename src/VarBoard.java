@@ -189,7 +189,7 @@ public class VarBoard
 				if(solve()) return true;
 			}
 		}
-		System.out.println("Couldn't put " + n + " at [" + i + ", " + j + "]");
+		//System.out.println("Couldn't put " + n + " at [" + i + ", " + j + "]");
 		put(i, j, 0);
 		return false;
 	}
