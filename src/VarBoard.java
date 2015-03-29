@@ -14,16 +14,14 @@ public class VarBoard
 	{
 		dim = d;
 		board = new Variable[dim*dim][dim*dim];
-		for (int i = 0; i < dim*dim; i++)
-		{
-			for (int j = 0; j < dim*dim; j++)
-			{
+		for (int i = 0; i < dim*dim; i++) {
+			for (int j = 0; j < dim*dim; j++) {
 				board[i][j] = new Variable(dim, 0, i, j);
 			}
 		}
 	}
 	
-	public VarBoard(int[][] boardToSolve, int d)
+	public VarBoard(Variable[][] boardToSolve, int d)
 	{
 		dim = d;
 		board = new Variable[dim*dim][dim*dim];
@@ -31,8 +29,40 @@ public class VarBoard
 		{
 			for (int j = 0; j < dim*dim; j++)
 			{
-				if (boardToSolve[i][j] == 0) board[i][j] = new Variable(dim, 0, i, j);
-				else board[i][j] = new Variable(dim, boardToSolve[i][j], i, j);
+				if (boardToSolve[i][j].val == 0) board[i][j] = new Variable(dim, 0, i, j);
+				else board[i][j] = new Variable(dim, boardToSolve[i][j].val, i, j);
+			}
+		}
+		queue = new PriorityQueue<Variable>(dim*dim*dim*dim, new Comparator<Variable>() {
+	        public int compare(Variable var1, Variable var2) 
+	        {
+	        	Collection<Integer> d1 = var1.domain();
+	        	Collection<Integer> d2 = var2.domain();
+	        	
+	        	if (d1 == null && d2 == null) return 0;
+	        	if (d1 == null) return 1;
+	        	if (d2 == null) return -1;
+	        	
+	        	if (d1.size() > d2.size()) return 1;
+	        	if (d1.size() < d2.size()) return -1;
+	        	return 0;
+	        }
+		});
+		
+		for (int i = 0; i < dim*dim; i++) for (int j = 0; j < dim*dim; j++) queue.add(board[i][j]);
+	}
+	
+	// copy constructor
+	public VarBoard(VarBoard boardToSolve, int d)
+	{
+		dim = d;
+		board = new Variable[dim*dim][dim*dim];
+		for (int i = 0; i < dim*dim; i++)
+		{
+			for (int j = 0; j < dim*dim; j++)
+			{
+				if (boardToSolve.board[i][j].val == 0) board[i][j] = new Variable(dim, 0, i, j);
+				else board[i][j] = new Variable(dim, boardToSolve.board[i][j].val, i, j);
 			}
 		}
 		queue = new PriorityQueue<Variable>(dim*dim*dim*dim, new Comparator<Variable>() {
