@@ -43,42 +43,37 @@ public class Generator {
 		return hb.getBoard(randNum.nextInt(10) + 1);
 	}
 	
-	public Board getRandomBoard() {
-		Board board = new Board(dim);
+	public VarBoard getRandomBoard() {
+		VarBoard board = new VarBoard(dim);
+		VarBoard cpy;
 		Random rand = new Random();
-		int[][] valids = new int[2][20];
+		int[][] valids = new int[2][25];
 		// Fill an empty board with 20 random numbers in random positions.
-		for (int i = 0; i < 20; i++) {
+		for (int i = 0; i < 25; i++) {
+			System.out.println("i: " + i);
 			int x, y, value;
+			boolean solvable;
 			do {
+				solvable = false;
 				x = rand.nextInt(dim*dim); 
 				y = rand.nextInt(dim*dim);
 				value = rand.nextInt(dim*dim) + 1;
-			} while (!board.put(x, y, value));
+				if (board.board[x][y].val == 0) {
+					if (board.put(x, y, value)){
+						board.fancyPrint();
+						cpy = new VarBoard(board, dim);
+						if (cpy.solve()) solvable = true;
+						else board.put(x, y, 0);
+					}
+					else board.put(x,  y,  0);
+				}
+			} while (!solvable);
 			valids[0][i] = x;
 			valids[1][i] = y;
 		}
-		Board cpy = board;
-		// Check if the board has a solution.
-		if (!cpy.solve()) {
-			do {
-				int toRemove = rand.nextInt(20);
-				board.removeVariable(valids[0][toRemove], valids[1][toRemove]);
-				int x, y, value;
-				do {
-					x = rand.nextInt(dim*dim); 
-					y = rand.nextInt(dim*dim);
-					value = rand.nextInt(dim*dim) + 1;
-				} while (!board.put(x, y, value));
-				valids[0][toRemove] = x;
-				valids[1][toRemove] = y;
-				
-				cpy = board;
-			} while (!cpy.solve()); /* loop until we've got a solveable board */
-		}
-		
 		return board;
 	}
+
 	
 	static int [][][] board3 = {{{0, 0, 0, 0, 0, 2, 0, 0, 6}, 
 		{0, 4, 0, 0, 9, 0, 0, 0, 8}, 
@@ -188,22 +183,6 @@ public class Generator {
 		{0, 0, 0, 7, 0, 0, 5, 16, 0, 0, 15, 0, 6, 0, 0, 13 },
 		{0, 0, 0, 3, 13, 0, 8, 9, 0, 0, 1, 5, 0, 16, 0, 2 }
 		}, 
-		{{12, 2, 0, 7, 0, 0, 0, 16, 6, 15, 0, 0, 0, 3, 0, 14}, 
-		{0, 0, 0, 9, 12, 0, 2, 0, 0, 0, 0, 0, 16, 1, 0, 6}, 
-		{0, 11, 0, 13, 0, 0, 7, 0, 4, 0, 8, 0, 0, 0, 15, 0}, 
-		{0, 8, 0, 3, 0, 0, 1, 0, 0, 0, 16, 13, 11, 0, 4, 2}, 
-		{0, 0, 15, 0, 0, 0, 0, 0, 1, 6, 11, 0, 0, 0, 3, 0}, 
-		{3, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 16, 8, 0, 6, 12}, 
-		{0, 0, 0, 14, 2, 0, 0, 0, 0, 12, 0, 0, 7, 4, 0, 0}, 
-		{0, 12, 8, 4, 10, 0, 0, 14, 7, 0, 9, 3, 15, 0, 0, 0}, 
-		{0, 0, 0, 16, 3, 7, 0, 4, 5, 0, 0, 9, 10, 14, 13, 0}, 
-		{0, 0, 13, 8, 0, 0, 11, 0, 0, 0, 0, 12, 4, 0, 0, 0}, 
-		{4, 9, 0, 5, 15, 0, 14, 0, 0, 0, 0, 0, 0, 0, 0, 11}, 
-		{0, 14, 0, 0, 0, 6, 13, 1, 0, 0, 0, 0, 0, 7, 0, 0}, 
-		{9, 1, 0, 15, 7, 4, 0, 0, 0, 16, 0, 0, 3, 0, 14, 0}, 
-		{0, 3, 0, 0, 0, 9, 0, 2, 0, 1, 0, 0, 5, 0, 10, 0}, 
-		{16, 0, 4, 12, 0, 0, 0, 0, 0, 3, 0, 14, 1, 0, 0, 0}, 
-		{5, 0, 14, 0, 0, 0, 16, 15, 9, 0, 0, 0, 2, 0, 12, 4}}, 
 		{{14, 0, 2, 5, 0, 0, 0, 0, 13, 16, 0, 0, 1, 10, 0, 0}, 
 			{11, 0, 0, 13, 0, 1, 0, 0, 6, 2, 0, 0, 0, 3, 14, 0}, 
 			{7, 6, 15, 0, 3, 0, 0, 13, 14, 0, 0, 0, 11, 0, 0, 0}, 
@@ -219,7 +198,23 @@ public class Generator {
 			{0, 0, 0, 0, 9, 0, 0, 10, 0, 0, 0, 0, 0, 15, 0, 2}, 
 			{0, 0, 0, 14, 0, 0, 0, 7, 15, 0, 0, 3, 0, 6, 10, 9}, 
 			{0, 2, 5, 0, 0, 0, 16, 6, 0, 0, 9, 0, 4, 0, 0, 11}, 
-			{0, 0, 3, 9, 0, 0, 2, 11, 0, 0, 0, 0, 14, 1, 0, 8}}};
+			{0, 0, 3, 9, 0, 0, 2, 11, 0, 0, 0, 0, 14, 1, 0, 8}}, 
+			{{12, 2, 0, 7, 0, 0, 0, 16, 6, 15, 0, 0, 0, 3, 0, 14}, 
+				{0, 0, 0, 9, 12, 0, 2, 0, 0, 0, 0, 0, 16, 1, 0, 6}, 
+				{0, 11, 0, 13, 0, 0, 7, 0, 4, 0, 8, 0, 0, 0, 15, 0}, 
+				{0, 8, 0, 3, 0, 0, 1, 0, 0, 0, 16, 13, 11, 0, 4, 2}, 
+				{0, 0, 15, 0, 0, 0, 0, 0, 1, 6, 11, 0, 0, 0, 3, 0}, 
+				{3, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 16, 8, 0, 6, 12}, 
+				{0, 0, 0, 14, 2, 0, 0, 0, 0, 12, 0, 0, 7, 4, 0, 0}, 
+				{0, 12, 8, 4, 10, 0, 0, 14, 7, 0, 9, 3, 15, 0, 0, 0}, 
+				{0, 0, 0, 16, 3, 7, 0, 4, 5, 0, 0, 9, 10, 14, 13, 0}, 
+				{0, 0, 13, 8, 0, 0, 11, 0, 0, 0, 0, 12, 4, 0, 0, 0}, 
+				{4, 9, 0, 5, 15, 0, 14, 0, 0, 0, 0, 0, 0, 0, 0, 11}, 
+				{0, 14, 0, 0, 0, 6, 13, 1, 0, 0, 0, 0, 0, 7, 0, 0}, 
+				{9, 1, 0, 15, 7, 4, 0, 0, 0, 16, 0, 0, 3, 0, 14, 0}, 
+				{0, 3, 0, 0, 0, 9, 0, 2, 0, 1, 0, 0, 5, 0, 10, 0}, 
+				{16, 0, 4, 12, 0, 0, 0, 0, 0, 3, 0, 14, 1, 0, 0, 0}, 
+				{5, 0, 14, 0, 0, 0, 16, 15, 9, 0, 0, 0, 2, 0, 12, 4}}};
 
 	static public int[][] get(int size, int index)
 	{
