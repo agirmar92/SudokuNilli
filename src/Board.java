@@ -9,7 +9,6 @@ public class Board
 	public Board(int d)
 	{
 		dim = d;
-		//board = new int[dim*dim][dim*dim];
 		board = new Variable[dim*dim][dim*dim];
 	}
 	
@@ -22,10 +21,11 @@ public class Board
 	public boolean put(int x, int y, int val)
 	{
 		if (x >= dim*dim || y >= dim*dim || x < 0 || y < 0 || val > dim*dim) return false;
+		board[x][y] = new Variable(dim, val, x, y);
 		if (isValid(x, y)) {
-			board[x][y] = new Variable(dim, val, x, y);
 			return true;
 		}
+		this.removeVariable(x, y);
 		return false;
 	}
 	
@@ -128,6 +128,7 @@ public class Board
 			put(i, j, n);
 			if (isValid(i, j))
 			{
+				fancyPrint();
 				if(solve()) return true;
 			}
 		}
@@ -170,5 +171,19 @@ public class Board
 	
 	public void removeVariable(int x, int y) {
 		board[x][y] = null;
+	}
+
+	public Board copy() {
+		Board newBoard = new Board(this.dim);
+		newBoard.counter = this.counter;
+		newBoard.board = new Variable[dim*dim][dim*dim];
+		for (int i = 0; i < dim*dim; i++) {
+			for (int j = 0; j < dim*dim; j++) {
+				if (this.board[i][j] != null) {
+					newBoard.board[i][j] = this.board[i][j].copy();
+				}
+			}
+		}
+		return newBoard;
 	}
 }

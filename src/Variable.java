@@ -52,7 +52,8 @@ public class Variable
 	public Variable copy()
 	{
 		Variable var = new Variable(dim, val, x, y);
-		for (int i = 0; i < domain.length; i++) var.domain[i] = domain[i];
+		if (domain != null) 
+			for (int i = 0; i < domain.length; i++) var.domain[i] = domain[i];
 		return var;
 	}
 	

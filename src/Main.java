@@ -43,6 +43,5 @@ public class Main
 		Generator gen = new Generator(4);
 		VarBoard randomBoard = gen.getRandomBoard();
 		randomBoard.fancyPrint();
-
 	}
 }
