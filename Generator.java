@@ -43,42 +43,37 @@ public class Generator {
 		return hb.getBoard(randNum.nextInt(10) + 1);
 	}
 	
-	public Board getRandomBoard() {
-		Board board = new Board(dim);
+	public VarBoard getRandomBoard() {
+		VarBoard board = new VarBoard(dim);
+		VarBoard cpy;
 		Random rand = new Random();
-		int[][] valids = new int[2][20];
+		int[][] valids = new int[2][25];
 		// Fill an empty board with 20 random numbers in random positions.
-		for (int i = 0; i < 20; i++) {
+		for (int i = 0; i < 25; i++) {
+			System.out.println("i: " + i);
 			int x, y, value;
+			boolean solvable;
 			do {
+				solvable = false;
 				x = rand.nextInt(dim*dim); 
 				y = rand.nextInt(dim*dim);
 				value = rand.nextInt(dim*dim) + 1;
-			} while (!board.put(x, y, value));
+				if (board.board[x][y].val == 0) {
+					if (board.put(x, y, value)){
+						board.fancyPrint();
+						cpy = new VarBoard(board, dim);
+						if (cpy.solve()) solvable = true;
+						else board.put(x, y, 0);
+					}
+					else board.put(x,  y,  0);
+				}
+			} while (!solvable);
 			valids[0][i] = x;
 			valids[1][i] = y;
 		}
-		Board cpy = board;
-		// Check if the board has a solution.
-		if (!cpy.solve()) {
-			do {
-				int toRemove = rand.nextInt(20);
-				board.removeVariable(valids[0][toRemove], valids[1][toRemove]);
-				int x, y, value;
-				do {
-					x = rand.nextInt(dim*dim); 
-					y = rand.nextInt(dim*dim);
-					value = rand.nextInt(dim*dim) + 1;
-				} while (!board.put(x, y, value));
-				valids[0][toRemove] = x;
-				valids[1][toRemove] = y;
-				
-				cpy = board;
-			} while (!cpy.solve()); /* loop until we've got a solveable board */
-		}
-		
 		return board;
 	}
+
 	
 	static int [][][] board3 = {{{0, 0, 0, 0, 0, 2, 0, 0, 6}, 
 		{0, 4, 0, 0, 9, 0, 0, 0, 8}, 
