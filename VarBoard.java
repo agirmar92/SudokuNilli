@@ -125,7 +125,7 @@ public class VarBoard
 	// in progress
 	public boolean solve()
 	{
-		//if (++counter % 50000 == 0) fancyPrint();
+		if (++counter % 100000 == 0) fancyPrint();
 		//System.out.println("solve");
 		if (full()) 
 		{
@@ -233,6 +233,7 @@ public class VarBoard
 	 */
 	public boolean newSolve()
 	{
+		//System.out.println("newsolve");
 		if (full()) 
 		{
 			System.out.println("SOLVED");
@@ -246,7 +247,7 @@ public class VarBoard
 			put(i, j, n);
 			if (isValid(i, j))
 			{
-				if(solve()) return true;
+				if(newSolve()) return true;
 			}
 		}
 		put(i, j, 0);
