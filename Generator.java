@@ -42,8 +42,8 @@ public class Generator {
 		return hb.getBoard(randNum.nextInt(10) + 1);
 	}
 	
-	public Board getRandomBoard() {
-		Board board = new Board(dim);
+	public VarBoard getRandomBoard() {
+		VarBoard board = new VarBoard(dim);
 		Random rand = new Random();
 		int[][] valids = new int[2][20];
 		// Fill an empty board with 20 random numbers in random positions.
@@ -54,22 +54,25 @@ public class Generator {
 					x = rand.nextInt(dim*dim); 
 					y = rand.nextInt(dim*dim);
 					value = rand.nextInt(dim*dim) + 1;
-				} while (board.board[x][y] != null);
+				} while (board.board[x][y].val != 0);
 			} while (!board.put(x, y, value));
 			valids[0][i] = x;
 			valids[1][i] = y;
 		}
-		Board cpy = board.copy();
+		VarBoard cpy = board.copy();
 		// Check if the board has a solution.
 		if (!cpy.solve()) {
 			do {
 				int toRemove = rand.nextInt(20);
-				board.removeVariable(valids[0][toRemove], valids[1][toRemove]);
+				//board.removeVariable(valids[0][toRemove], valids[1][toRemove]);
+				board.board[valids[0][toRemove]][valids[1][toRemove]].val = 0;
 				int x, y, value;
 				do {
-					x = rand.nextInt(dim*dim); 
-					y = rand.nextInt(dim*dim);
-					value = rand.nextInt(dim*dim) + 1;
+					do {
+						x = rand.nextInt(dim*dim); 
+						y = rand.nextInt(dim*dim);
+						value = rand.nextInt(dim*dim) + 1;
+					} while (board.board[x][y].val != 0);
 				} while (!board.put(x, y, value));
 				valids[0][toRemove] = x;
 				valids[1][toRemove] = y;
