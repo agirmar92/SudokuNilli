@@ -21,7 +21,7 @@ public class VarBoard
 		}
 	}
 	
-	public VarBoard(Variable[][] boardToSolve, int d)
+	public VarBoard(int[][] boardToSolve, int d)
 	{
 		dim = d;
 		board = new Variable[dim*dim][dim*dim];
@@ -29,8 +29,8 @@ public class VarBoard
 		{
 			for (int j = 0; j < dim*dim; j++)
 			{
-				if (boardToSolve[i][j].val == 0) board[i][j] = new Variable(dim, 0, i, j);
-				else board[i][j] = new Variable(dim, boardToSolve[i][j].val, i, j);
+				if (boardToSolve[i][j] == 0) board[i][j] = new Variable(dim, 0, i, j);
+				else board[i][j] = new Variable(dim, boardToSolve[i][j], i, j);
 			}
 		}
 		queue = new PriorityQueue<Variable>(dim*dim*dim*dim, new Comparator<Variable>() {
@@ -162,7 +162,7 @@ public class VarBoard
 	// in progress
 	public boolean solve()
 	{
-		//if (++counter % 50000 == 0) fancyPrint();
+		if (++counter % 50000 == 0) fancyPrint();
 		//System.out.println("solve");
 		if (full()) 
 		{
@@ -185,7 +185,7 @@ public class VarBoard
 				if(solve()) return true;
 			}
 		}
-		System.out.println("Couldn't put " + n + " at [" + i + ", " + j + "]");
+		//System.out.println("Couldn't put " + n + " at [" + i + ", " + j + "]");
 		put(i, j, 0);
 		return false;
 	}
@@ -272,6 +272,9 @@ public class VarBoard
 	 */
 	public boolean newSolve()
 	{
+		//counter++;
+		//if (counter % 50000 == 0) fancyPrint();
+		
 		if (full()) 
 		{
 			System.out.println("SOLVED");
@@ -285,7 +288,7 @@ public class VarBoard
 			put(i, j, n);
 			if (isValid(i, j))
 			{
-				if(solve()) return true;
+				if(newSolve()) return true;
 			}
 		}
 		put(i, j, 0);

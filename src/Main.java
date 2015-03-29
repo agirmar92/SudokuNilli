@@ -28,7 +28,8 @@ public class Main
 /*		VarBoard v = new VarBoard(Generator.getBoard4(), 4);
 		v.fancyPrint();
 		Stopwatch timer = new Stopwatch();
-		v.solve();
+		v.initialRestrict();
+		v.newSolve();
 		System.out.println(timer.elapsedTime());
 */		/*System.out.println(timer2.elapsedTime());*/
 		
@@ -40,8 +41,12 @@ public class Main
 		b.solve();
 		System.out.println(timer.elapsedTime());*/
 		
-		Generator gen = new Generator(4);
+		Generator gen = new Generator(3);
 		VarBoard randomBoard = gen.getRandomBoard();
 		randomBoard.fancyPrint();
+		
+		Stopwatch timer = new Stopwatch();
+		randomBoard.solve();
+		System.out.println(timer.elapsedTime());
 	}
 }
