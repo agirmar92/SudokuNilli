@@ -1,7 +1,9 @@
 package Sudoku;
 
 import java.lang.reflect.Constructor;
-import java.util.Random;
+import java.util.*;
+
+import aima.core.util.datastructure.Pair;
 
 
 public class Generator {
@@ -47,7 +49,7 @@ public class Generator {
 		VarBoard board = new VarBoard(dim);
 		VarBoard cpy;
 		Random rand = new Random();
-		int[][] valids = new int[2][25];
+		List<Pair<Pair<Integer,Integer>,Integer>> invalids = new ArrayList<Pair<Pair<Integer,Integer>,Integer>>();
 		// Fill an empty board with 20 random numbers in random positions.
 		for (int i = 0; i < 25; i++) {
 			System.out.println("i: " + i);
@@ -57,19 +59,24 @@ public class Generator {
 				solvable = false;
 				x = rand.nextInt(dim*dim); 
 				y = rand.nextInt(dim*dim);
+				Pair<Integer,Integer> pos = new Pair<Integer,Integer>(x,y);
 				value = rand.nextInt(dim*dim) + 1;
-				if (board.board[x][y].val == 0) {
-					if (board.put(x, y, value)){
-						board.fancyPrint();
-						cpy = new VarBoard(board, dim);
-						if (cpy.solve()) solvable = true;
-						else board.put(x, y, 0);
+				Pair<Pair<Integer,Integer>,Integer> trio = new Pair<Pair<Integer,Integer>,Integer>(pos,value);
+				if (!invalids.contains(trio)) {
+					if (board.board[x][y].val == 0) {
+						if (board.put(x, y, value)) {
+							board.fancyPrint();
+							cpy = new VarBoard(board, dim);
+							if (cpy.solve()) solvable = true;
+							else {
+								board.put(x, y, 0);
+								invalids.add(trio);
+							}
+						}
+						else board.put(x,  y,  0);
 					}
-					else board.put(x,  y,  0);
 				}
 			} while (!solvable);
-			valids[0][i] = x;
-			valids[1][i] = y;
 		}
 		return board;
 	}
