@@ -1,5 +1,7 @@
 package Sudoku;
 
+import java.util.*;
+
 public class Variable
 {
 	int val;
@@ -21,6 +23,14 @@ public class Variable
 		this.y = y;
 	}
 	
+	public Collection<Integer> domain()
+	{
+		Collection<Integer> set = new ArrayList<Integer>();
+		if (domain == null) return null;
+		for (int i = 0; i < domain.length; i++) if (domain[i]) set.add(i + 1);
+		return set;
+	}
+	
 	public void restrict(int n)
 	{
 		domain[n] = false;
@@ -37,5 +47,4 @@ public class Variable
 		return var;
 	}
 	
-	// A function that returns all the neighbours?
 }
