@@ -140,12 +140,15 @@ public class VarBoard
 		DistinctSet test = new DistinctSet(dim*dim);
 		for (int i = 0; i < dim*dim; i++)
 		{
-			if (board[x][i].val > 0) if (test.insert(board[x][i].val)) return false;
+			if (board[x][i].val > 0) 
+			{
+				if (test.insert(board[x][i].val)) {return false;}
+			}
 		}
 		test.clear();
 		for (int i = 0; i < dim*dim; i++)
 		{
-			if (board[i][y].val > 0) if (test.insert(board[i][y].val)) return false;
+			if (board[i][y].val > 0) if (test.insert(board[i][y].val)) {return false;}
 		}
 		test.clear();
 		int box_x = x / dim;
@@ -165,7 +168,8 @@ public class VarBoard
 	// in progress
 	public boolean solve()
 	{
-		if (++counter % 50000 == 0) fancyPrint();
+		//fancyPrint();
+		counter++;
 		if (full()) 
 		{
 			System.out.println("SOLVED");
