@@ -173,7 +173,7 @@ public class VarBoard
 		if (full()) 
 		{
 			System.out.println("SOLVED");
-			fancyPrint();
+			//fancyPrint();
 			return true;
 		}
 		int i = 0, j = 0;
@@ -311,10 +311,12 @@ public class VarBoard
 		if (full())
 		{
 			System.out.println("SOLVED");
-			fancyPrint();
+			//fancyPrint();
 			return true;
 		}
-		int i = 0, j = 0;
+		
+		// Method 1: random order
+		/*int i = -1, j = -1;
 		search:
 		for (i = 0; i < dim*dim; i++)
 		{
@@ -324,9 +326,44 @@ public class VarBoard
 				if (var.val == 0) break search;
 			}
 		}
-		Variable curr = board[i][j];
+		Variable curr = board[i][j];*/
+
+		// Method 2: use queue
 		//Variable curr = queue.remove();
-		//System.out.println(curr.toString());
+
+		// Method 3: use initial order:
+		//Variable curr = vars.get(index++);
+		
+		// Method 4
+		int best = dim * dim + 1;
+		int h = -1 ;
+		int k = -1;;
+		for(int i = 0; i < dim*dim; i++) 
+		{
+			for(int j = 0; j < dim*dim; j++)
+			{
+				Variable var = board[i][j];
+				if (var.val == 0 && var.domain().size() < best) 
+				{
+					best = var.domain().size();
+					h = i; 
+					k = j;
+				}
+			}
+		}
+		/*int i = 0, j = 0;
+		search:
+		for (i = 0; i < dim*dim; i++)
+		{
+			for (j = 0; j < dim * dim; j++) 
+			{
+				Variable var = board[i][j];
+				if (var.val == 0) break search;
+			}
+		}*/
+		// System.out.println(h + " " + k);
+		Variable curr = board[h][k];
+		
 		for (int n : curr.domain())
 		{
 			// put
@@ -344,6 +381,7 @@ public class VarBoard
 		}
 		// unput
 		curr.val = 0;
+		//index--;
 		//queue.add(curr);
 		//System.out.println("backtrack");
 		return false;
