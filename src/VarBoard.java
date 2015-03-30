@@ -9,6 +9,9 @@ public class VarBoard
 	int dim;	
 	int counter = 0;
 	PriorityQueue<Variable> queue;
+	ArrayList<Variable> vars;
+	Scanner in = new Scanner(System.in);
+	int index = 0;
 	
 	public VarBoard(int d)
 	{
@@ -81,7 +84,7 @@ public class VarBoard
 	        }
 		});
 		
-		for (int i = 0; i < dim*dim; i++) for (int j = 0; j < dim*dim; j++) queue.add(board[i][j]);
+		for (int i = 0; i < dim*dim; i++) for (int j = 0; j < dim*dim; j++) if (board[i][j].domain != null) queue.add(board[i][j]);
 	}
 	
 	public boolean put(int x, int y, int val)
@@ -163,7 +166,6 @@ public class VarBoard
 	public boolean solve()
 	{
 		if (++counter % 50000 == 0) fancyPrint();
-		//System.out.println("solve");
 		if (full()) 
 		{
 			System.out.println("SOLVED");
@@ -185,7 +187,6 @@ public class VarBoard
 				if(solve()) return true;
 			}
 		}
-		//System.out.println("Couldn't put " + n + " at [" + i + ", " + j + "]");
 		put(i, j, 0);
 		return false;
 	}
@@ -199,7 +200,7 @@ public class VarBoard
 	
 	/*
 	 * Returns a collection with all the variables in the same row, column and box, 
-	 * including var
+	 * not including the variable
 	 */
 	public Collection<Variable> neighbours(Variable v)
 	{
@@ -214,7 +215,29 @@ public class VarBoard
 		{
 			for (int j = 0; j < dim; j++)
 			{
-				set.add(board[dim * box_x+i][dim * box_y+j]);
+				Variable temp = board[dim * box_x+i][dim * box_y+j];
+				if (temp != v && !set.contains(temp)) set.add(temp);
+			}
+		}
+		
+		return set;
+	}
+	
+	public Collection<Variable> freeNeighbours(Variable v)
+	{
+		Collection<Variable> set = new ArrayList<Variable>();
+		int x = v.x;
+		int y = v.y;
+		for (int i = 0; i < dim*dim; i++) if (i != y) if (board[x][y].val == 0) set.add(board[x][i]);
+		for (int j = 0; j < dim*dim; j++) if (j != x) if (board[x][y].val == 0) set.add(board[j][y]);
+		int box_x = x / dim;
+		int box_y = y / dim;
+		for (int i = 0; i < dim; i++)
+		{
+			for (int j = 0; j < dim; j++)
+			{
+				Variable temp = board[dim * box_x+i][dim * box_y+j];
+				if (temp != v && !set.contains(temp) && temp.val == 0) set.add(temp);
 			}
 		}
 		
@@ -239,7 +262,7 @@ public class VarBoard
 					{
 						if (var.val == 0)
 						{
-							var.restrict(board[i][j].val - 1);
+							var.restrict(board[i][j].val);
 						}
 					}
 				}
@@ -261,8 +284,13 @@ public class VarBoard
 	        	return 0;
 	        }
 		});
-		
-		while(!queue.isEmpty()) nqueue.add(queue.remove());
+		vars = new ArrayList<Variable>();
+		while(!queue.isEmpty()) 
+		{
+			Variable temp = queue.remove();
+			nqueue.add(temp);
+			vars.add(temp);
+		}
 		queue = nqueue;
 		
 	}
@@ -272,27 +300,48 @@ public class VarBoard
 	 */
 	public boolean newSolve()
 	{
-		//counter++;
-		//if (counter % 50000 == 0) fancyPrint();
-		
-		if (full()) 
+		//in.next();
+		//fancyPrint();
+		counter++;
+		//if (counter % 1000 == 0) fancyPrint();
+		if (full())
 		{
 			System.out.println("SOLVED");
 			fancyPrint();
 			return true;
 		}
-		Variable var = queue.remove();
-		int i = var.x, j = var.y;
-		for (int n : board[i][j].domain())
+		int i = 0, j = 0;
+		
+		search:
+		for (i = 0; i < dim*dim; i++)
 		{
-			put(i, j, n);
-			if (isValid(i, j))
+			for (j = 0; j < dim * dim; j++) 
 			{
-				if(newSolve()) return true;
+				Variable var = board[i][j];
+				if (var.val == 0) break search;
 			}
 		}
-		put(i, j, 0);
-		queue.add(var);
+		Variable curr = board[i][j];
+		//System.out.println(curr.toString());
+		for (int n : curr.domain())
+		{
+			// put
+			curr.val = n;
+			// check validity
+			if (isValid(curr.x, curr.y))
+			{
+				// restrict
+				Collection<Variable> neighbours = freeNeighbours(curr);
+				for (Variable v : neighbours) v.restrict(n);
+				if(newSolve()) return true;
+				// unrestrict
+				for (Variable v : neighbours) v.allow(n);
+			}
+		}
+		// unput
+		curr.val = 0;
+		queue.add(curr);
+		//System.out.println("backtrack");
 		return false;
 	}
 	
