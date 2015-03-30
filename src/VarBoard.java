@@ -314,7 +314,6 @@ public class VarBoard
 			return true;
 		}
 		int i = 0, j = 0;
-		
 		search:
 		for (i = 0; i < dim*dim; i++)
 		{
