@@ -307,7 +307,7 @@ public class VarBoard
 		//in.next();
 		//fancyPrint();
 		counter++;
-		//if (counter % 1000 == 0) fancyPrint();
+		//if (counter % 100000 == 0) fancyPrint();
 		if (full())
 		{
 			System.out.println("SOLVED");
@@ -325,6 +325,7 @@ public class VarBoard
 			}
 		}
 		Variable curr = board[i][j];
+		//Variable curr = queue.remove();
 		//System.out.println(curr.toString());
 		for (int n : curr.domain())
 		{
@@ -343,7 +344,7 @@ public class VarBoard
 		}
 		// unput
 		curr.val = 0;
-		queue.add(curr);
+		//queue.add(curr);
 		//System.out.println("backtrack");
 		return false;
 	}

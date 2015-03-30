@@ -64,15 +64,15 @@ public class Main
 		VarBoard randomBoard = gen.getRandomBoard();
 <<<<<<< HEAD
 		randomBoard.fancyPrint();*/
-		
-		VarBoard b = new VarBoard(Generator.get(4, 4), 4);
+		int i = 1;
+		VarBoard b = new VarBoard(Generator.get(4, i), 4);
 		b.fancyPrint();
 		Stopwatch timer = new Stopwatch();
 		b.initialRestrict();
 		System.out.println("newSolve");
 		b.newSolve();
 		System.out.println("time: \t" + timer.elapsedTime() + "\t states: \t" + b.counter);
-		b = new VarBoard(Generator.get(4, 4), 4);
+		b = new VarBoard(Generator.get(4, i), 4);
 		//b.fancyPrint();
 		b.counter = 0;
 		timer = new Stopwatch();
