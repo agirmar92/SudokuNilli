@@ -44,7 +44,7 @@ public class Variable
 	
 	public boolean isOK(int n)
 	{
-		if (n > domain.length || n > 1) return false;
+		if (n > domain.length || n < 1) return false;
 		return domain[n-1] > 0;
 	}
 	
