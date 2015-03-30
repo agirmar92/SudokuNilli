@@ -7,8 +7,9 @@ public class Main
 {
 	static public void main(String[] args)
 	{
-		for (int i = 0; i < 3 ; i++)
+		/*for (int i = 0; i < 4 ; i++)
 		{
+			if (i == 2) continue;
 			VarBoard b = new VarBoard(Generator.get(4, i), 4);
 			Stopwatch timer = new Stopwatch();
 			b.solve();
@@ -20,7 +21,7 @@ public class Main
 			b.initialRestrict();
 			b.newSolve();
 			System.out.println("Queue: \t time: " + timer.elapsedTime() + " \t states: " + b.counter);
-		}
+		}*/
 
 		/*int[][] board4 = Generator.getBoard4(); 
 		Board b4 = new Board(board4, 4);
@@ -61,5 +62,21 @@ public class Main
 		/*Generator gen = new Generator(4);
 		VarBoard randomBoard = gen.getRandomBoard();
 		randomBoard.fancyPrint();*/
+		
+		VarBoard b = new VarBoard(Generator.get(4, 3), 4);
+		b.fancyPrint();
+		Stopwatch timer = new Stopwatch();
+		b.initialRestrict();
+		System.out.println("newSolve");
+		b.newSolve();
+		System.out.println("time: \t" + timer.elapsedTime() + "\t states: \t" + b.counter);
+		b = new VarBoard(Generator.get(4, 3), 4);
+		//b.fancyPrint();
+		b.counter = 0;
+		timer = new Stopwatch();
+		//b.initialRestrict();
+		b.solve();
+		System.out.println("solve");
+		System.out.println("time: \t" + timer.elapsedTime() + "\t states: \t" + b.counter);
 	}
 }
