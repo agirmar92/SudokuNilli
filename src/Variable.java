@@ -1,3 +1,4 @@
+package Sudoku;
 import java.util.*;
 
 public class Variable
@@ -27,7 +28,8 @@ public class Variable
 		this.val = var.val;
 		this.dim = var.dim;
 		//this.domain = var.domain;
-		this.domain = var.domain.clone();
+		if (var.domain == null) this.domain = null;
+		else this.domain = var.domain.clone();
 		this.x = var.x;
 		this.y = var.y;
 	}
@@ -59,15 +61,26 @@ public class Variable
 	
 	public Variable copy()
 	{
+		//System.out.println("copy");
 		Variable var = new Variable(dim, val, x, y);
-		if (domain != null) 
-			for (int i = 0; i < domain.length; i++) var.domain[i] = domain[i];
+		if (domain != null)  for (int i = 0; i < domain.length; i++) {
+			if (var.domain == null) var.domain = new int[dim * dim];	
+			var.domain[i] = domain[i];
+			}
+		else var.domain = null;
 		return var;
 	}
 	public String toString()
 	{
 		String s =  "(" + x + "," + y + "): " + val;
-		if (val == 0) s += "\t size of domain: " + domain().size();
+		if (val == 0) 
+		{
+			s += "\t size of domain: " + domain().size() + "\t domain:";
+			for (int i : domain())
+			{
+				s += " " + i;
+			}
+		}
 		return s;
 	}
 	

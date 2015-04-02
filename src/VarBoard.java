@@ -10,10 +10,13 @@ public class VarBoard
 	ArrayList<Variable> vars;
 	Scanner in = new Scanner(System.in);
 	int index = 0;
+	int depth = 0;
+	int assignments;
 	
 	public VarBoard(int d)
 	{
 		dim = d;
+		assignments = 0;
 		board = new Variable[dim*dim][dim*dim];
 		for (int i = 0; i < dim*dim; i++) {
 			for (int j = 0; j < dim*dim; j++) {
@@ -31,10 +34,10 @@ public class VarBoard
 			for (int j = 0; j < dim*dim; j++)
 			{
 				if (boardToSolve[i][j] == 0) board[i][j] = new Variable(dim, 0, i, j);
-				else board[i][j] = new Variable(dim, boardToSolve[i][j], i, j);
+				else  {board[i][j] = new Variable(dim, boardToSolve[i][j], i, j); assignments++;}
 			}
 		}
-		queue = new PriorityQueue<Variable>(dim*dim*dim*dim, new Comparator<Variable>() {
+		/*queue = new PriorityQueue<Variable>(dim*dim*dim*dim, new Comparator<Variable>() {
 	        public int compare(Variable var1, Variable var2) 
 	        {
 	        	Collection<Integer> d1 = var1.domain();
@@ -50,13 +53,14 @@ public class VarBoard
 	        }
 		});
 		
-		for (int i = 0; i < dim*dim; i++) for (int j = 0; j < dim*dim; j++) queue.add(board[i][j]);
+		for (int i = 0; i < dim*dim; i++) for (int j = 0; j < dim*dim; j++) queue.add(board[i][j]);*/
 	}
 	
 	// copy constructor
 	public VarBoard(VarBoard boardToSolve, int d)
 	{
 		dim = d;
+		assignments = boardToSolve.assignments;
 		board = new Variable[dim*dim][dim*dim];
 		for (int i = 0; i < dim*dim; i++)
 		{
@@ -66,7 +70,7 @@ public class VarBoard
 				else board[i][j] = new Variable(dim, boardToSolve.board[i][j].val, i, j);
 			}
 		}
-		queue = new PriorityQueue<Variable>(dim*dim*dim*dim, new Comparator<Variable>() {
+		/*queue = new PriorityQueue<Variable>(dim*dim*dim*dim, new Comparator<Variable>() {
 	        public int compare(Variable var1, Variable var2) 
 	        {
 	        	Collection<Integer> d1 = var1.domain();
@@ -82,7 +86,23 @@ public class VarBoard
 	        }
 		});
 		
-		for (int i = 0; i < dim*dim; i++) for (int j = 0; j < dim*dim; j++) if (board[i][j].domain != null) queue.add(board[i][j]);
+		for (int i = 0; i < dim*dim; i++) for (int j = 0; j < dim*dim; j++) if (board[i][j].domain != null) queue.add(board[i][j]);*/
+	}
+	
+	public VarBoard (VarBoard old)
+	{
+		counter = old.counter;
+		dim = old.dim;
+		depth = old.depth;
+		assignments = old.assignments;
+		board = new Variable[dim*dim][dim*dim];
+		for (int i = 0; i < dim * dim; i++)
+		{
+			for (int j = 0; j < dim * dim; j++)
+			{
+				board[i][j] = new Variable(old.board[i][j]);
+			}
+		}
 	}
 	
 	public boolean put(int x, int y, int val)
@@ -171,7 +191,8 @@ public class VarBoard
 		if (full()) 
 		{
 			System.out.println("SOLVED");
-			//fancyPrint();
+			System.out.println("assignments: " + assignments);
+			fancyPrint();
 			return true;
 		}
 		int i = 0, j = 0;
@@ -181,6 +202,7 @@ public class VarBoard
 			for (j = 0; j < dim*dim; j++) if (board[i][j].val == 0) break search;
 		}
 		int n;
+		assignments++;
 		for (n = 1; n <= dim*dim; n++)
 		{
 			put(i, j, n);
@@ -190,6 +212,7 @@ public class VarBoard
 			}
 		}
 		put(i, j, 0);
+		assignments--;
 		return false;
 	}
 	
@@ -252,6 +275,7 @@ public class VarBoard
 	public void initialRestrict()
 	{
 		//int count = 0;
+		System.out.println("initial assignments " + assignments);
 		for (int i = 0; i < dim*dim; i++)
 		{
 			for (int j = 0; j < dim*dim; j++)
@@ -343,6 +367,7 @@ public class VarBoard
 			}			
 		}
 		
+		/*
 		PriorityQueue<Variable> nqueue = new PriorityQueue<Variable>(dim*dim*dim*dim, new Comparator<Variable>() {
 	        public int compare(Variable var1, Variable var2) 
 	        {
@@ -365,7 +390,7 @@ public class VarBoard
 			nqueue.add(temp);
 			vars.add(temp);
 		}
-		queue = nqueue;
+		queue = nqueue;*/
 		
 	}
 	/*
@@ -374,13 +399,14 @@ public class VarBoard
 	 */
 	public boolean newSolve()
 	{
-		//in.next();
-		//fancyPrint();
+		depth++;
 		counter++;
-		//if (counter % 100000 == 0) fancyPrint();
+		//printAll();
+		//in.next();
 		if (full())
 		{
-			//System.out.println("SOLVED");
+			System.out.println("SOLVED");
+			System.out.println("assignments: " + assignments + " " + depth);
 			fancyPrint();
 			return true;
 		}
@@ -431,31 +457,139 @@ public class VarBoard
 				if (var.val == 0) break search;
 			}
 		}*/
-		// System.out.println(h + " " + k);
+		assignments++;
 		Variable curr = board[h][k];
-		
 		for (int n : curr.domain())
 		{
-			// put
 			curr.val = n;
-			// check validity
-			//if (isValid(curr.x, curr.y))
-			//{
-				// restrict
-				Collection<Variable> neighbours = freeNeighbours(curr);
-				for (Variable v : neighbours) v.restrict(n);
-				if(newSolve()) return true;
-				// unrestrict
-				for (Variable v : neighbours) v.allow(n);
-			//}
+			// restrict
+			Collection<Variable> neighbours = freeNeighbours(curr);
+			for (Variable v : neighbours) v.restrict(n);
+			if(newSolve()) return true;
+			// unrestrict
+			for (Variable v : neighbours) v.allow(n);
 		}
 		// unput
 		curr.val = 0;
+		assignments--;
 		//index--;
-		//queue.add(curr);
+		//queue.remove(curr);
 		//System.out.println("backtrack");
+		depth--;
 		return false;
 	}
+	
+	
+	public void findSolution()
+	{
+		initialRestrict();
+		board = simpleInference();
+		newSolve();
+		if (!isSolution()) System.out.println("NOT A SOLUTION !!!");
+		else System.out.println("OK SOLUTION !!!");
+	}
+	
+	private Variable[][] simpleInference()
+	{
+		VarBoard nboard = new VarBoard(dim);
+		for (int i = 0; i < dim * dim; i++) for (int j = 0; j < dim * dim; j++) nboard.board[i][j] = board[i][j].copy();
+		
+		boolean changed = true;
+		while (changed)
+		{
+			changed = false;
+			search:
+			for (int i = 0; i < dim * dim; i++)
+			{
+				for(int j = 0; j < dim * dim; j++)
+				{
+					// check if domain is 1, then assign and restrict
+					Variable var = nboard.board[i][j];
+					if (var.domain() != null && var.val == 0 && var.domain().size() == 1)
+					{
+						assignments++;
+						//System.out.println("restrict " + var.toString());
+						int value = 0;
+						for (int r : var.domain()) value = r;						
+						var.val = value;
+						Collection<Variable> neighbours = nboard.freeNeighbours(var);
+						for (Variable v : neighbours) v.restrict(value);
+						changed = true;
+						break search;
+					}
+				}
+			}
+		}
+		return nboard.board;
+	}
+	
+	public boolean newNewSolve()
+	{
+		//fancyPrint();
+		depth++;
+		counter++;
+		//System.out.println("newNewSolve");
+		//if (counter % 1000 == 0) {System.out.println("Counter: \t" + counter); /*fancyPrint();*/}
+		if (full())
+		{
+			fancyPrint();
+			System.out.println("SOLVED \t counter: " + counter);
+			System.out.println("assignments: " + assignments + " " + depth);
+			return true;
+		}
+
+		// Method 4
+		int best = dim * dim + 1;
+		int h = -1 ;
+		int k = -1;;
+		for(int i = 0; i < dim*dim; i++) 
+		{
+			for(int j = 0; j < dim*dim; j++)
+			{
+				Variable var = board[i][j];
+				if (var.val == 0 && var.domain().size() < best) 
+				{
+					best = var.domain().size();
+					h = i; 
+					k = j;
+				}
+			}
+		}
+		Variable curr = board[h][k];
+		assignments++;
+		for (int n : curr.domain())
+		{
+			curr.val = n;
+			if(!isValid(curr.x, curr.y)) {System.out.println("NOT VALID !!!");}
+			if (isValid(curr.x, curr.y))
+			{
+				// restrict
+				Collection<Variable> neighbours = freeNeighbours(curr);
+				for (Variable v : neighbours) v.restrict(n);
+				
+				if (depth % 20 == 0)
+				{
+					assignments--;
+					VarBoard newBoard = new VarBoard(this);
+					newBoard.assignments = this.assignments;
+					newBoard.board = newBoard.simpleInference();
+					if (newBoard.newNewSolve()) return true;
+					assignments++;
+				}
+				else{
+				if(newNewSolve()) return true;
+				// unrestrict
+				for (Variable v : neighbours) v.allow(n);}
+			}
+		}
+		// unput
+		curr.val = 0;
+		assignments--;
+		depth--;
+		return false;
+	}
+	
+	
 	
 	/*
 	 * Used for checking if there are duplicates in a row, column, or box
@@ -488,4 +622,39 @@ public class VarBoard
 			for (int i = 0; i < set.length; i++) set[i] = false;
 		}
 	}
+	
+	public void printAll()
+	{
+		fancyPrint();
+		for (int i = 0; i < dim * dim; i++) for (int j = 0; j < dim * dim; j++) System.out.println(board[i][j].toString());
+	}
+	
+	public boolean isSolution()
+	{
+		for (int i = 0; i < dim * dim; i++)
+		{
+			for (int j = 0; j < dim * dim; j++)
+			{
+				Variable var1 = board[i][j];
+				for (int h = 0; h < dim * dim; h++)
+				{
+					for (int k = 0; k < dim * dim; k++)
+					{
+						Variable var2 = board[h][k];
+						if (var1 != var2)
+						{
+							if (var1.x == var2.x || var1.y == var2.y || (var1.x / dim == var2.x / dim && var1.y / dim == var2.y / dim))
+							{
+								if (var1.val == var2.val) return false;
+							}
+						}
+					}
+				}
+			}
+		}
+		return true;
+	}
 }
+
+
+
