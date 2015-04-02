@@ -51,7 +51,6 @@ public class Generator {
 							board.fancyPrint();
 							cpy = new VarBoard(board, dim);
 							boolean solved = false;
-							Stopwatch time = new Stopwatch();
 							solved = cpy.newSolve();
 							if (solved) solvable = true;
 							else {
