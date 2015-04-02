@@ -136,6 +136,7 @@ public class VarBoard
 	{
 		int extraEdge = 7;
 		if (dim == 4) extraEdge = 25;
+		if (dim == 5) extraEdge = 36;
 		for (int i = 0; i < dim*dim; i++)
 		{
 			if (i % dim == 0) printEdge(2 * dim * dim + extraEdge);
@@ -143,7 +144,7 @@ public class VarBoard
 			{
 				if (j % dim == 0) System.out.print(" | ");
 				else System.out.print(" ");
-				if (dim == 4) if (0 <= board[i][j].val && board[i][j].val < 10) System.out.print(" "); 
+				if (dim == 4 || dim == 5) if (0 <= board[i][j].val && board[i][j].val < 10) System.out.print(" "); 
 				System.out.print(board[i][j].val);
 			}
 			System.out.print(" |");
@@ -402,7 +403,7 @@ public class VarBoard
 	{
 		depth++;
 		counter++;
-		//if (counter % 100000 == 0) fancyPrint();
+		if (counter % 100000 == 0) fancyPrint();
 		//printAll();
 		//in.next();
 		if (full())
