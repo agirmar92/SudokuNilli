@@ -230,8 +230,8 @@ public class VarBoard
 		Collection<Variable> set = new ArrayList<Variable>();
 		int x = v.x;
 		int y = v.y;
-		for (int i = 0; i < dim*dim; i++) if (i != y) if (board[x][y].val == 0) set.add(board[x][i]);
-		for (int j = 0; j < dim*dim; j++) if (j != x) if (board[x][y].val == 0) set.add(board[j][y]);
+		for (int i = 0; i < dim*dim; i++) if (i != y) if (board[x][i].val == 0) set.add(board[x][i]);
+		for (int j = 0; j < dim*dim; j++) if (j != x) if (board[j][y].val == 0) set.add(board[j][y]);
 		int box_x = x / dim;
 		int box_y = y / dim;
 		for (int i = 0; i < dim; i++)
@@ -271,6 +271,78 @@ public class VarBoard
 			}
 		}
 		
+		// iterate through the sections and try to restrict more
+		boolean changes = true;
+		while (changes) {
+			changes = false;
+			boolean place = true;
+			for (int i = 0; i < dim*dim; i++) {
+				for (int j = 0; j < dim*dim; j++) {
+					Variable v = board[i][j];
+					if (v.val == 0) {
+						for (int num : v.domain()) {
+							// check row
+							for (int k = 0; k < dim*dim; k++) {
+								if (board[i][k].val == 0) {
+									if (board[i][k].domain().contains(num) && j != k) {
+										place = false;
+										break;
+									}
+								}
+							}
+							// check column
+							if (!place) {
+								place = true;
+								for (int k = 0; k < dim*dim; k++) {
+									if (board[k][j].val == 0) {
+										if (board[k][j].domain().contains(num) && i != k) {
+											place = false;
+											break;
+										}
+									}
+								}
+							}
+							// check section
+							if (!place) {
+								place = true;
+								int box_x = i / dim;
+								int box_y = j / dim;
+								for (int k = 0; k < dim; k++)
+								{
+									for (int h = 0; h < dim; h++)
+									{
+										Variable temp = board[dim * box_x + k][dim * box_y + h];
+										if (temp.val == 0 && temp != v) {
+											if (temp.domain().contains(num)) {
+												place = false;
+												break;
+											}
+										}
+									}
+								}
+							}
+							// place it
+							if (place) {
+								put(i, j, num);
+								// restrict
+								Collection<Variable> set = neighbours(board[i][j]);
+								for (Variable var : set)
+								{
+									if (var.val == 0)
+									{
+										var.restrict(num);
+									}
+								}
+								v.domain = null;
+								changes = true;
+								break;
+							}
+						}		
+					}
+				}
+			}			
+		}
+		
 		PriorityQueue<Variable> nqueue = new PriorityQueue<Variable>(dim*dim*dim*dim, new Comparator<Variable>() {
 	        public int compare(Variable var1, Variable var2) 
 	        {
@@ -308,8 +380,8 @@ public class VarBoard
 		//if (counter % 100000 == 0) fancyPrint();
 		if (full())
 		{
-			System.out.println("SOLVED");
-			//fancyPrint();
+			//System.out.println("SOLVED");
+			fancyPrint();
 			return true;
 		}
 		
@@ -367,15 +439,15 @@ public class VarBoard
 			// put
 			curr.val = n;
 			// check validity
-			if (isValid(curr.x, curr.y))
-			{
+			//if (isValid(curr.x, curr.y))
+			//{
 				// restrict
 				Collection<Variable> neighbours = freeNeighbours(curr);
 				for (Variable v : neighbours) v.restrict(n);
 				if(newSolve()) return true;
 				// unrestrict
 				for (Variable v : neighbours) v.allow(n);
-			}
+			//}
 		}
 		// unput
 		curr.val = 0;
