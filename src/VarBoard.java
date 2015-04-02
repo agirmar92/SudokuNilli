@@ -13,6 +13,7 @@ public class VarBoard
 	int index = 0;
 	int depth = 0;
 	int assignments;
+	Variable[][] solvedBoard = null;
 	
 	public VarBoard(int d)
 	{
@@ -391,22 +392,19 @@ public class VarBoard
 		{
 			curr.val = n;
 			//if (depth == 20) {System.out.println(depth); System.out.println(curr.toString());}
-			if (!isValid(curr.x, curr.y)) 
+			/*if (!isValid(curr.x, curr.y)) 
 			{
 				System.out.println("NOT VALID !!! \t depth " + depth + " " + counter);
 				System.out.println(curr.toString());
 				fancyPrint();
 				in.next();
-			}
-			if (isValid(curr.x, curr.y))
-			{
-				// restrict
-				Collection<Variable> neighbours = freeNeighbours(curr);
-				for (Variable v : neighbours) v.restrict(n);
-				if(newSolve()) return true;
-				// unrestrict
-				for (Variable v : neighbours) v.allow(n);
-			}
+			}*/
+			//restrict
+			Collection<Variable> neighbours = freeNeighbours(curr);
+			for (Variable v : neighbours) v.restrict(n);
+			if(newSolve()) return true;
+			// unrestrict
+			for (Variable v : neighbours) v.allow(n);
 		}
 		// unput
 		curr.val = 0;
@@ -419,13 +417,19 @@ public class VarBoard
 	}
 	
 	
-	public void findSolution()
+	public void findSolution(int type)
 	{
-		initialRestrict();
+		if (type == 1) {initialRestrict();
 		board = simpleInference();
 		newSolve();
 		if (!isSolution()) System.out.println("NOT A SOLUTION !!!");
-		else System.out.println("OK SOLUTION !!!");
+		else System.out.println("OK SOLUTION !!!");}
+		else 
+		{
+			initialRestrict();
+			board = simpleInference();
+			newNewSolve();
+		}
 	}
 	
 	private Variable[][] simpleInference()
@@ -469,11 +473,16 @@ public class VarBoard
 		counter++;
 		//System.out.println("newNewSolve");
 		//if (counter % 1000 == 0) {System.out.println("Counter: \t" + counter); /*fancyPrint();*/}
+		printAll();
+		in.next();
 		if (full())
 		{
 			fancyPrint();
+			solvedBoard = this.board;
 			System.out.println("SOLVED \t counter: " + counter);
 			System.out.println("assignments: " + assignments + " " + depth);
+			System.out.println("check:");
+			if (isSolution()) System.out.println("IS OK SOLUTION"); else System.out.println("NOT OK");
 			return true;
 		}
 
@@ -499,26 +508,28 @@ public class VarBoard
 		for (int n : curr.domain())
 		{
 			curr.val = n;
-			if(!isValid(curr.x, curr.y)) {System.out.println("NOT VALID !!!");}
-			if (isValid(curr.x, curr.y))
+			
+			System.out.println("VARIABLE");
+			System.out.println(curr.toString());
+			in.next();
+			
+			// restrict
+			Collection<Variable> neighbours = freeNeighbours(curr);
+			for (Variable v : neighbours) v.restrict(n);
+			
+			if (depth % 50 == 0)
 			{
-				// restrict
-				Collection<Variable> neighbours = freeNeighbours(curr);
-				for (Variable v : neighbours) v.restrict(n);
-				
-				if (depth % 20 == 0)
-				{
-					assignments--;
-					VarBoard newBoard = new VarBoard(this);
-					newBoard.assignments = this.assignments;
-					newBoard.board = newBoard.simpleInference();
-					if (newBoard.newNewSolve()) return true;
-					assignments++;
-				}
-				else{
-				if(newNewSolve()) return true;
-				// unrestrict
-				for (Variable v : neighbours) v.allow(n);}
+				assignments--;
+				VarBoard newBoard = new VarBoard(this);
+				newBoard.assignments = this.assignments;
+				newBoard.board = newBoard.simpleInference();
+				if (newBoard.newNewSolve()) return true;
+				assignments++;
+			}
+			else{
+			if(newNewSolve()) return true;
+			// unrestrict
+			for (Variable v : neighbours) v.allow(n);
 			}
 		}
 		// unput
@@ -565,26 +576,33 @@ public class VarBoard
 	public void printAll()
 	{
 		fancyPrint();
+		in.next();
 		for (int i = 0; i < dim * dim; i++) for (int j = 0; j < dim * dim; j++) System.out.println(board[i][j].toString());
 	}
 	
 	public boolean isSolution()
 	{
+		if (solvedBoard == null) solvedBoard = board;
 		for (int i = 0; i < dim * dim; i++)
 		{
 			for (int j = 0; j < dim * dim; j++)
 			{
-				Variable var1 = board[i][j];
+				Variable var1 = solvedBoard[i][j];
 				for (int h = 0; h < dim * dim; h++)
 				{
 					for (int k = 0; k < dim * dim; k++)
 					{
-						Variable var2 = board[h][k];
+						Variable var2 = solvedBoard[h][k];
 						if (var1 != var2)
 						{
 							if (var1.x == var2.x || var1.y == var2.y || (var1.x / dim == var2.x / dim && var1.y / dim == var2.y / dim))
 							{
-								if (var1.val == var2.val) return false;
+								if (var1.val == var2.val) 
+								{
+									System.out.println(var1.toString());
+									System.out.println(var2.toString());
+									return false;
+								}
 							}
 						}
 					}

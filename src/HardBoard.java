@@ -1,3 +1,4 @@
+package Sudoku;
 public class HardBoard {
     // Dimension 9x9, board id = 0
     static private int[][] board30 = {
