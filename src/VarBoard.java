@@ -12,7 +12,7 @@ public class VarBoard
 	int index = 0;
 	int depth = 0;
 	int assignments;
-	Variable[][] solvedBoard = null;
+	ArrayList<ArrayList<Variable>> ordering;
 	
 	public VarBoard(int d)
 	{
@@ -30,14 +30,22 @@ public class VarBoard
 	{
 		dim = d;
 		board = new Variable[dim*dim][dim*dim];
+		ordering = new ArrayList<ArrayList<Variable>>(dim * dim);
 		for (int i = 0; i < dim*dim; i++)
 		{
 			for (int j = 0; j < dim*dim; j++)
 			{
-				if (boardToSolve[i][j] == 0) board[i][j] = new Variable(dim, 0, i, j);
-				else  {board[i][j] = new Variable(dim, boardToSolve[i][j], i, j); assignments++;}
+				if (boardToSolve[i][j] == 0) 
+				{
+					board[i][j] = new Variable(dim, 0, i, j);
+				}
+				else  
+				{
+					board[i][j] = new Variable(dim, boardToSolve[i][j], i, j);
+				}
 			}
 		}
+		
 		/*queue = new PriorityQueue<Variable>(dim*dim*dim*dim, new Comparator<Variable>() {
 	        public int compare(Variable var1, Variable var2) 
 	        {
@@ -71,7 +79,7 @@ public class VarBoard
 				else board[i][j] = new Variable(dim, boardToSolve.board[i][j].val, i, j);
 			}
 		}
-		/*queue = new PriorityQueue<Variable>(dim*dim*dim*dim, new Comparator<Variable>() {
+		queue = new PriorityQueue<Variable>(dim*dim*dim*dim, new Comparator<Variable>() {
 	        public int compare(Variable var1, Variable var2) 
 	        {
 	        	Collection<Integer> d1 = var1.domain();
@@ -87,7 +95,7 @@ public class VarBoard
 	        }
 		});
 		
-		for (int i = 0; i < dim*dim; i++) for (int j = 0; j < dim*dim; j++) if (board[i][j].domain != null) queue.add(board[i][j]);*/
+		for (int i = 0; i < dim*dim; i++) for (int j = 0; j < dim*dim; j++) if (board[i][j].domain != null) queue.add(board[i][j]);
 	}
 	
 	public VarBoard (VarBoard old)
@@ -277,7 +285,6 @@ public class VarBoard
 	public void initialRestrict()
 	{
 		//int count = 0;
-		System.out.println("initial assignments " + assignments);
 		for (int i = 0; i < dim*dim; i++)
 		{
 			for (int j = 0; j < dim*dim; j++)
@@ -297,6 +304,9 @@ public class VarBoard
 			}
 		}
 		
+		/*queue = null;
+		queue = new PriorityQueue<Variable>(dim*dim*dim*dim, new Comparator<Variable>() {
+=======
 		// iterate through the free spots and try to restrict the board more
 		boolean changes = true;
 		while (changes) {
@@ -371,6 +381,7 @@ public class VarBoard
 		
 		/*
 		PriorityQueue<Variable> nqueue = new PriorityQueue<Variable>(dim*dim*dim*dim, new Comparator<Variable>() {
+>>>>>>> a2caf2be87ec0ea0de4163690602583521c6a2b4
 	        public int compare(Variable var1, Variable var2) 
 	        {
 	        	Collection<Integer> d1 = var1.domain();
@@ -385,14 +396,17 @@ public class VarBoard
 	        	return 0;
 	        }
 		});
-		vars = new ArrayList<Variable>();
-		while(!queue.isEmpty()) 
+		//System.out.println("adding to queue");
+		for (int i = 0; i < dim  *  dim; i++) for (int j = 0; j < dim *  dim; j++)
 		{
-			Variable temp = queue.remove();
-			nqueue.add(temp);
-			vars.add(temp);
-		}
-		queue = nqueue;*/
+			Variable var = board[i][j];
+			if (var.val == 0) 
+			{
+				//System.out.println(var.toString());
+				queue.add(var);
+			}
+		}*/
+		//System.out.println("queue done");
 		
 	}
 	/*
@@ -408,11 +422,13 @@ public class VarBoard
 		//in.next();
 		if (full())
 		{
-			System.out.println("SOLVED");
-			System.out.println("assignments: " + assignments + " " + depth);
-			fancyPrint();
+			//System.out.println("SOLVED");
+			//System.out.println("assignments: " + assignments + " " + depth);
+			//fancyPrint();
 			return true;
 		}
+		//fancyPrint();
+		//in.next();
 		
 		// Method 1: random order
 		/*int i = -1, j = -1;
@@ -428,7 +444,8 @@ public class VarBoard
 		Variable curr = board[i][j];*/
 
 		// Method 2: use queue
-		//Variable curr = queue.remove();
+		//Variable next = queue.remove();
+		//System.out.println(next.toString());
 
 		// Method 3: use initial order:
 		//Variable curr = vars.get(index++);
@@ -484,7 +501,8 @@ public class VarBoard
 		curr.val = 0;
 		assignments--;
 		//index--;
-		//queue.remove(curr);
+		//System.out.println("add this variable to queue: " + curr.toString());
+		//queue.add(curr);
 		//System.out.println("backtrack");
 		depth--;
 		return false;
@@ -493,6 +511,28 @@ public class VarBoard
 	
 	public void findSolution(int type)
 	{
+		if (type == 1) {
+			initialRestrict();
+			//System.out.println(ordering.toString());
+			board = simpleInference();
+			newSolve();
+			if (!isSolution()) System.out.println("NOT A SOLUTION !!!");
+			else System.out.println("OK SOLUTION !!!");}
+		else 
+		{
+			initialRestrict();
+			board = simpleInference();
+			ordering = new ArrayList<ArrayList<Variable>>(dim * dim + 1);
+			for (int i = 0; i < dim * dim + 1; i++)
+			{
+				ArrayList<Variable> inner = new ArrayList<Variable>();
+				ordering.add(inner);
+			}
+			for (int i = 0; i < dim * dim; i++) for (int j = 0; j < dim *  dim; j++) if (board[i][j].val == 0)
+			{
+				ordering.get(board[i][j].domain().size()).add(board[i][j]);
+			}
+			System.out.println(ordering.toString());
 		if (type == 1) {initialRestrict();
 		board = simpleInference();
 		Stopwatch time = new Stopwatch();
@@ -504,7 +544,7 @@ public class VarBoard
 			initialRestrict();
 			//board = simpleInference();
 			newNewSolve();
-		}
+		}}
 	}
 	
 	private Variable[][] simpleInference()
@@ -546,23 +586,26 @@ public class VarBoard
 		//fancyPrint();
 		depth++;
 		counter++;
-		//System.out.println("newNewSolve");
-		//if (counter % 1000 == 0) {System.out.println("Counter: \t" + counter); /*fancyPrint();*/}
-		printAll();
-		in.next();
 		if (full())
 		{
-			fancyPrint();
-			solvedBoard = this.board;
-			System.out.println("SOLVED \t counter: " + counter);
+			System.out.println("SOLVED");
 			System.out.println("assignments: " + assignments + " " + depth);
-			System.out.println("check:");
-			if (isSolution()) System.out.println("IS OK SOLUTION"); else System.out.println("NOT OK");
+			//fancyPrint();
 			return true;
 		}
-
 		// Method 4
-		int best = dim * dim + 1;
+		Variable curr = null;
+		for (int i = 0; i < dim * dim + 1; i++)
+		{
+			if (!ordering.get(i).isEmpty())
+			{
+				curr = ordering.get(i).get(0);
+				ordering.get(i).remove(0);
+				break;
+			}
+		}
+		//System.out.println("variable chosen: " + curr);
+		/*int best = dim * dim + 1;
 		int h = -1 ;
 		int k = -1;;
 		for(int i = 0; i < dim*dim; i++) 
@@ -578,38 +621,32 @@ public class VarBoard
 				}
 			}
 		}
-		Variable curr = board[h][k];
-		assignments++;
+		Variable curr = board[h][k];*/
 		for (int n : curr.domain())
 		{
 			curr.val = n;
 			
-			System.out.println("VARIABLE");
-			System.out.println(curr.toString());
-			in.next();
-			
-			// restrict
+			//restrict
 			Collection<Variable> neighbours = freeNeighbours(curr);
-			for (Variable v : neighbours) v.restrict(n);
-			
-			if (depth % 50 == 0)
+			for (Variable v : neighbours) 
 			{
-				assignments--;
-				VarBoard newBoard = new VarBoard(this);
-				newBoard.assignments = this.assignments;
-				newBoard.board = newBoard.simpleInference();
-				if (newBoard.newNewSolve()) return true;
-				assignments++;
+				//System.out.println("variable begin moved: " + v);
+				ordering.get(v.domain().size()).remove(v);
+				v.restrict(n);
+				ordering.get(v.domain().size()).add(v);
 			}
-			else{
 			if(newNewSolve()) return true;
 			// unrestrict
-			for (Variable v : neighbours) v.allow(n);
+			for (Variable v : neighbours) 
+			{
+				ordering.get(v.domain().size()).remove(v);
+				v.allow(n);
+				ordering.get(v.domain().size()).add(v);
 			}
 		}
 		// unput
 		curr.val = 0;
-		assignments--;
+		ordering.get(curr.domain().size()).add(curr);
 		depth--;
 		return false;
 	}
@@ -657,17 +694,17 @@ public class VarBoard
 	
 	public boolean isSolution()
 	{
-		if (solvedBoard == null) solvedBoard = board;
+
 		for (int i = 0; i < dim * dim; i++)
 		{
 			for (int j = 0; j < dim * dim; j++)
 			{
-				Variable var1 = solvedBoard[i][j];
+				Variable var1 = board[i][j];
 				for (int h = 0; h < dim * dim; h++)
 				{
 					for (int k = 0; k < dim * dim; k++)
 					{
-						Variable var2 = solvedBoard[h][k];
+						Variable var2 = board[h][k];
 						if (var1 != var2)
 						{
 							if (var1.x == var2.x || var1.y == var2.y || (var1.x / dim == var2.x / dim && var1.y / dim == var2.y / dim))
