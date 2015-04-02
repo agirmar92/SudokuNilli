@@ -1,6 +1,7 @@
-package Sudoku;
 //import java.lang.reflect.Constructor;
 import java.util.*;
+
+import aima.core.util.datastructure.Pair;
 
 //import aima.core.util.datastructure.Pair;
 
@@ -23,13 +24,17 @@ public class Generator {
         return HardBoard.getBoard(dim, id);
     }
 	
-	/*public VarBoard getRandomBoard() {
+	public static VarBoard getRandomBoard(int dim) {
 		VarBoard board = new VarBoard(dim);
 		VarBoard cpy;
 		Random rand = new Random();
 		List<Pair<Pair<Integer,Integer>,Integer>> invalids = new ArrayList<Pair<Pair<Integer,Integer>,Integer>>();
 		// Fill an empty board with 20 random numbers in random positions.
-		for (int i = 0; i < 25; i++) {
+		int n = 0;
+		if (dim == 3) n = 25;
+		if (dim == 4) n = 100;
+		if (dim == 5) n = 250;
+		for (int i = 0; i < n; i++) {
 			System.out.println("i: " + i);
 			int x, y, value;
 			boolean solvable;
@@ -45,7 +50,9 @@ public class Generator {
 						if (board.put(x, y, value)) {
 							board.fancyPrint();
 							cpy = new VarBoard(board, dim);
-							if (cpy.solve()) solvable = true;
+							boolean solved = false;
+							solved = cpy.newSolve();
+							if (solved) solvable = true;
 							else {
 								board.put(x, y, 0);
 								invalids.add(trio);
@@ -59,7 +66,6 @@ public class Generator {
 		return board;
 	}
 
-	*/
     static int [][][] board3 = {{{0, 0, 0, 0, 0, 2, 0, 0, 6}, 
 		{0, 4, 0, 0, 9, 0, 0, 0, 8}, 
 		{0, 0, 0, 5, 0, 0, 4, 3, 0}, 

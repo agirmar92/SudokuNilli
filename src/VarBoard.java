@@ -1,4 +1,3 @@
-package Sudoku;
 //import Sudoku.Board.DistinctSet;
 import java.util.*;
 
@@ -304,9 +303,84 @@ public class VarBoard
 			}
 		}
 		
-		
 		/*queue = null;
 		queue = new PriorityQueue<Variable>(dim*dim*dim*dim, new Comparator<Variable>() {
+=======
+		// iterate through the free spots and try to restrict the board more
+		boolean changes = true;
+		while (changes) {
+			changes = false;
+			boolean place = true;
+			for (int i = 0; i < dim*dim; i++) {
+				for (int j = 0; j < dim*dim; j++) {
+					Variable v = board[i][j];
+					if (v.val == 0) {
+						for (int num : v.domain()) {
+							// check row
+							for (int k = 0; k < dim*dim; k++) {
+								if (board[i][k].val == 0) {
+									if (board[i][k].domain().contains(num) && j != k) {
+										place = false;
+										break;
+									}
+								}
+							}
+							// check column
+							if (!place) {
+								place = true;
+								for (int k = 0; k < dim*dim; k++) {
+									if (board[k][j].val == 0) {
+										if (board[k][j].domain().contains(num) && i != k) {
+											place = false;
+											break;
+										}
+									}
+								}
+							}
+							// check section
+							if (!place) {
+								place = true;
+								int box_x = i / dim;
+								int box_y = j / dim;
+								for (int k = 0; k < dim; k++)
+								{
+									for (int h = 0; h < dim; h++)
+									{
+										Variable temp = board[dim * box_x + k][dim * box_y + h];
+										if (temp.val == 0 && temp != v) {
+											if (temp.domain().contains(num)) {
+												place = false;
+												break;
+											}
+										}
+									}
+								}
+							}
+							// place it
+							if (place) {
+								put(i, j, num);
+								// restrict
+								Collection<Variable> set = neighbours(board[i][j]);
+								for (Variable var : set)
+								{
+									if (var.val == 0)
+									{
+										var.restrict(num);
+									}
+								}
+								v.domain = null;
+								changes = true;
+								break;
+							}
+						}		
+					}
+				}
+			}			
+		}
+		
+		/*
+		PriorityQueue<Variable> nqueue = new PriorityQueue<Variable>(dim*dim*dim*dim, new Comparator<Variable>() {
+>>>>>>> a2caf2be87ec0ea0de4163690602583521c6a2b4
 	        public int compare(Variable var1, Variable var2) 
 	        {
 	        	Collection<Integer> d1 = var1.domain();
@@ -342,6 +416,9 @@ public class VarBoard
 	{
 		depth++;
 		counter++;
+		//if (counter % 100000 == 0) fancyPrint();
+		//printAll();
+		//in.next();
 		if (full())
 		{
 			//System.out.println("SOLVED");
@@ -455,8 +532,18 @@ public class VarBoard
 				ordering.get(board[i][j].domain().size()).add(board[i][j]);
 			}
 			System.out.println(ordering.toString());
+		if (type == 1) {initialRestrict();
+		board = simpleInference();
+		Stopwatch time = new Stopwatch();
+		newSolve();
+		if (!isSolution()) System.out.println("NOT A SOLUTION !!!");
+		else System.out.println("OK SOLUTION !!!");}
+		else 
+		{
+			initialRestrict();
+			//board = simpleInference();
 			newNewSolve();
-		}
+		}}
 	}
 	
 	private Variable[][] simpleInference()
