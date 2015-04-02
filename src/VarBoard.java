@@ -1,5 +1,3 @@
-package Sudoku;
-
 //import Sudoku.Board.DistinctSet;
 import java.util.*;
 

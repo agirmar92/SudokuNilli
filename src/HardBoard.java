@@ -1,5 +1,3 @@
-package Sudoku;
-
 public class HardBoard {
 	public int[][] getBoard(int num) {
 		switch (num) {

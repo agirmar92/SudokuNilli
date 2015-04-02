@@ -1,5 +1,3 @@
-package Sudoku;
-
 /*************************************************************************
  *  Compilation:  javac Stopwatch.java
  *
