@@ -1,8 +1,8 @@
+dist/sudoku_Nilli.jar
+
+
 # Intellij #
 ############
 /.idea/*
 /out/*
 *.iml
-dist/sudoku_Nilli.jar
-
-
