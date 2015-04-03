@@ -305,8 +305,8 @@ public class VarBoard
 		}
 		
 		/*queue = null;
-		queue = new PriorityQueue<Variable>(dim*dim*dim*dim, new Comparator<Variable>() {
-=======
+		queue = new PriorityQueue<Variable>(dim*dim*dim*dim, new Comparator<Variable>() {*/
+
 		// iterate through the free spots and try to restrict the board more
 		boolean changes = true;
 		while (changes) {
@@ -381,7 +381,6 @@ public class VarBoard
 		
 		/*
 		PriorityQueue<Variable> nqueue = new PriorityQueue<Variable>(dim*dim*dim*dim, new Comparator<Variable>() {
->>>>>>> a2caf2be87ec0ea0de4163690602583521c6a2b4
 	        public int compare(Variable var1, Variable var2) 
 	        {
 	        	Collection<Integer> d1 = var1.domain();
@@ -517,7 +516,8 @@ public class VarBoard
 			board = simpleInference();
 			newSolve();
 			if (!isSolution()) System.out.println("NOT A SOLUTION !!!");
-			else System.out.println("OK SOLUTION !!!");}
+			else System.out.println("OK SOLUTION !!!");
+		}
 		else 
 		{
 			initialRestrict();
@@ -532,19 +532,11 @@ public class VarBoard
 			{
 				ordering.get(board[i][j].domain().size()).add(board[i][j]);
 			}
-			System.out.println(ordering.toString());
-		if (type == 1) {initialRestrict();
-		board = simpleInference();
-		Stopwatch time = new Stopwatch();
-		newSolve();
-		if (!isSolution()) System.out.println("NOT A SOLUTION !!!");
-		else System.out.println("OK SOLUTION !!!");}
-		else 
-		{
-			initialRestrict();
-			//board = simpleInference();
+			//System.out.println(ordering.toString());
 			newNewSolve();
-		}}
+			if (!isSolution()) System.out.println("NOT A SOLUTION !!!");
+			else System.out.println("OK SOLUTION !!!");
+		}
 	}
 	
 	private Variable[][] simpleInference()
@@ -586,10 +578,11 @@ public class VarBoard
 		//fancyPrint();
 		depth++;
 		counter++;
+		//if (counter % 100000 == 0) fancyPrint();
 		if (full())
 		{
-			System.out.println("SOLVED");
-			System.out.println("assignments: " + assignments + " " + depth);
+			//System.out.println("SOLVED");
+			//System.out.println("assignments: " + assignments + " " + depth);
 			//fancyPrint();
 			return true;
 		}
@@ -622,32 +615,34 @@ public class VarBoard
 			}
 		}
 		Variable curr = board[h][k];*/
-		for (int n : curr.domain())
-		{
-			curr.val = n;
-			
-			//restrict
-			Collection<Variable> neighbours = freeNeighbours(curr);
-			for (Variable v : neighbours) 
+		if (curr.domain != null) {
+			for (int n : curr.domain())
 			{
-				//System.out.println("variable begin moved: " + v);
-				ordering.get(v.domain().size()).remove(v);
-				v.restrict(n);
-				ordering.get(v.domain().size()).add(v);
+				curr.val = n;
+				
+				//restrict
+				Collection<Variable> neighbours = freeNeighbours(curr);
+				for (Variable v : neighbours) 
+				{
+					//System.out.println("variable begin moved: " + v);
+					ordering.get(v.domain().size()).remove(v);
+					v.restrict(n);
+					ordering.get(v.domain().size()).add(v);
+				}
+				if(newNewSolve()) return true;
+				// unrestrict
+				for (Variable v : neighbours) 
+				{
+					ordering.get(v.domain().size()).remove(v);
+					v.allow(n);
+					ordering.get(v.domain().size()).add(v);
+				}
 			}
-			if(newNewSolve()) return true;
-			// unrestrict
-			for (Variable v : neighbours) 
-			{
-				ordering.get(v.domain().size()).remove(v);
-				v.allow(n);
-				ordering.get(v.domain().size()).add(v);
-			}
+			// unput
+			curr.val = 0;
+			ordering.get(curr.domain().size()).add(curr);
+			depth--;
 		}
-		// unput
-		curr.val = 0;
-		ordering.get(curr.domain().size()).add(curr);
-		depth--;
 		return false;
 	}
 	
