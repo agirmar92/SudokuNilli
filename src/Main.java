@@ -21,7 +21,7 @@ public class Main
 		}
 */
 		// testing 25x25 board
-		VarBoard b = new VarBoard(Generator.get(5, 0), 5);
+		VarBoard b = new VarBoard(Generator.get(5, 4), 5);
 		b.fancyPrint();
 		Stopwatch timer = new Stopwatch();
 		b.findSolution(1);
