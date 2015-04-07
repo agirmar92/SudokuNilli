@@ -90,6 +90,7 @@ public class Sudoku
 	{
 		initialRestrict(ext);
 		if (simple) board = simpleInference();
+		if (ext) while (extendedInference()) board = simpleInference();
 		solve(var, val);
 		if (!isSolution()) {System.out.println("NOT A SOLUTION !!!"); return false;}
 		else {/*System.out.println("OK SOLUTION !!!");*/ return true;}
@@ -340,14 +341,13 @@ public class Sudoku
 				}
 			}
 		}
-		if (!more) return;
-		
-		extendedRestrict();
+		if (more) extendedInference(); 
 	}
 	
-	private void extendedRestrict()
+	private boolean extendedInference()
 	{
 		// iterate through the free spots and try to restrict the board more
+		boolean hasChanged = false;
 		boolean changes = true;
 		while (changes) {
 			changes = false;
@@ -399,6 +399,7 @@ public class Sudoku
 							}
 							// place it
 							if (place) {
+								hasChanged = true;
 								//put(i, j, num);
 								board[i][j].val = num;
 								assignments++;
@@ -420,6 +421,7 @@ public class Sudoku
 				}
 			}			
 		}
+		return hasChanged;
 	}
 	
 	private Variable[][] simpleInference()

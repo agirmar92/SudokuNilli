@@ -104,13 +104,13 @@ public class Main
         
         /* *******************************************************************************************
          *  Prints out configured information
-         *  int     param1: base dimension, accepted are 3, 4, 5 (warning 5 can take a while)
+         *  int     param1: base dimension, accepted are 3, 4, 5 (warning 5 can take a millennium)
          *  boolean param2: On/Off Variable heuristics
          *  boolean param3: On/Off Value heuristics
          *  boolean param4: On/Off Simple inference
          *  boolean param5: On/Off Extended restrict
          ******************************************************************************************* */
-        printInfo(4, true, true, true, true);
+        printInfo(4, true, false, true, true);
         
         
         /* *******************************************************************************************
