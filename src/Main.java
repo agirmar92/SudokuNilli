@@ -95,8 +95,27 @@ public class Main
 
 	static public void main(String[] args)
 	{
+        /* *******************************************************************************************
+         *  Prints out a basic status for all 9x9 and 16x16 sudokus, WARNING, could take some time
+         ******************************************************************************************* */
         // printAllStatus();
-        printInfo(3, true, true, true, false);
+
+        
+        /* *******************************************************************************************
+         *  Prints out configured information
+         *  int     param1: base dimension, accepted are 3, 4, 5 (warning 5 can take a while)
+         *  boolean param2: On/Off Variable heuristics
+         *  boolean param3: On/Off Value heuristics
+         *  boolean param4: On/Off Simple inference
+         *  boolean param5: On/Off Extended restrict
+         ******************************************************************************************* */
+        printInfo(3, true, true, true, true);
+        
+        
+        /* *******************************************************************************************
+         *  Prints out information about brute force
+         *  int     param1: base dimension, accepted are 3, 4, 5 (warning 5 can take a while)
+         ******************************************************************************************* */
         // printBrute(3);
 	
 	}
