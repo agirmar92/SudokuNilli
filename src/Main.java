@@ -96,7 +96,8 @@ public class Main
 	static public void main(String[] args)
 	{
         /* *******************************************************************************************
-         *  Prints out a basic status for all 9x9 and 16x16 sudokus, WARNING, could take some time
+         *  Prints out a basic status for all 9x9 and 16x16 sudokus
+         *  WARNING, could take some time, like, 2 centuries.
          ******************************************************************************************* */
         // printAllStatus();
 
@@ -109,7 +110,7 @@ public class Main
          *  boolean param4: On/Off Simple inference
          *  boolean param5: On/Off Extended restrict
          ******************************************************************************************* */
-        printInfo(3, true, true, true, true);
+        printInfo(4, true, true, true, true);
         
         
         /* *******************************************************************************************
