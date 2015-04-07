@@ -14,16 +14,6 @@ public class Generator {
 		dim = d;
 	}
 	
-	
-	public static int[][] getHardBoard() {
-		Random randNum = new Random();
-		return HardBoard.getBoard(3, randNum.nextInt(10) + 1);
-	}
-
-    public static int[][] getHardBoard(int dim, int id){
-        return HardBoard.getBoard(dim, id);
-    }
-	
 	/*public static VarBoard getRandomBoard(int dim) {
 		VarBoard board = new VarBoard(dim);
 		VarBoard cpy;
