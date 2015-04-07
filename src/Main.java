@@ -41,41 +41,63 @@ public class Main
         }
     }
 
+    static void printInfo(int dim, boolean variable, boolean value, boolean inference, boolean extended){
+        int size;
+        if(dim == 3) size = Generator.board3.length;
+        else if(dim == 4) size = Generator.board4.length;
+        else if(dim == 5) size = Generator.board5.length;
+        else return;
+
+        String svar = variable ? "T" : "F";
+        String sval = value ? "T" : "F";
+        String sinf = inference ? "T" : "F";
+        String sext = extended ? "T" : "F";
 
 
-	static public void main(String[] args)
-	{
-		for (int i = 0; i < Generator.board3.length; i++)
+        for (int i = 0; i < size; i++)
 		{
 			System.out.println();
 			System.out.println("BOARD " + i);
 			Sudoku s;
 			Stopwatch timer;
-			//if (!(i == 7 || i == 8)) {
-				s = new Sudoku(Generator.get(3, i), 3);
-				timer = new Stopwatch();
-				s.findSolution(true, true, true, false);
-				System.out.println("Var, Val, Simple, not Extended  " + i + "\t" + timer.elapsedTime() + " " + s.counter);				
-			//}
-			s = new Sudoku(Generator.get(3, i), 3);
-			timer = new Stopwatch();
-			s.findSolution(true, true, true, true);
-			System.out.println("Var, Val, Simple, Extended      " + i + "\t" + timer.elapsedTime() + " " + s.counter);
+            s = new Sudoku(Generator.get(dim, i), dim);
+            timer = new Stopwatch();
+            s.findSolution(variable, value, inference, extended);
+            System.out.println("Var, Val, Simple, not Extended  " + i + "\t" + timer.elapsedTime() + " " + s.counter);				
 		}
-		
-		// brute
-/*		for (int i = 0; i < Generator.board3.length; i++)
-		{
-			Sudoku s;
-			Stopwatch timer;
-			//if (!(i == 7 || i == 8)) {
-				s = new Sudoku(Generator.get(3, i), 3);
-				timer = new Stopwatch();
-				s.bruteSolve();
-				System.out.println("BOARD  " + i + "\t" + timer.elapsedTime() + " " + s.counter);				
-			//}
-		}
-*/	}
+    }
+
+    static void printBrute(int dim){
+        int size;
+        if(dim == 3) size = Generator.board3.length;
+        else if(dim == 4) size = Generator.board4.length;
+        else if(dim == 5) size = Generator.board5.length;
+        else return;
+
+        for (int i = 0; i < size; i++)
+        {
+            Sudoku s;
+            Stopwatch timer;
+            //if (!(i == 7 || i == 8)) {
+            s = new Sudoku(Generator.get(dim, i), dim);
+            timer = new Stopwatch();
+            s.bruteSolve();
+            System.out.println("BOARD  " + i + "\t" + timer.elapsedTime() + " " + s.counter);				
+            //}
+        }
+    }
+
+
+        
+
+
+	static public void main(String[] args)
+	{
+        // printAllStatus();
+        printInfo(3, true, true, true, false);
+        // printBrute(3);
+	
+	}
     
 
 }
