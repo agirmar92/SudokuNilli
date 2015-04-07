@@ -41,41 +41,84 @@ public class Main
         }
     }
 
+    static void printInfo(int dim, boolean variable, boolean value, boolean inference, boolean extended){
+        int size;
+        if(dim == 3) size = Generator.board3.length;
+        else if(dim == 4) size = Generator.board4.length;
+        else if(dim == 5) size = Generator.board5.length;
+        else return;
+
+        String svar = variable ? "True" : "False";
+        String sval = value ? "True" : "False";
+        String sinf = inference ? "True" : "False";
+        String sext = extended ? "True" : "False";
+
+        System.out.println("Solve parameters; Size: " + (dim*dim) + "x" + (dim*dim) + ", Var: " + svar + ", Val: " + sval + ", Simple: " + sinf + ", Extended: " + sext);
+
+        
+        System.out.print("\nBoardID\tTime\tStates\n");
+        for (int i = 0; i < size; i++)
+		{
+            System.out.print(i + "\t");
+			Sudoku s;
+			Stopwatch timer;
+            s = new Sudoku(Generator.get(dim, i), dim);
+            timer = new Stopwatch();
+            s.findSolution(variable, value, inference, extended);
+            System.out.print("\t" + timer.elapsedTime() + "\t" + s.counter + "\n");				
+		}
+    }
+
+    static void printBrute(int dim){
+        int size;
+        if(dim == 3) size = Generator.board3.length;
+        else if(dim == 4) size = Generator.board4.length;
+        else if(dim == 5) size = Generator.board5.length;
+        else return;
+
+        for (int i = 0; i < size; i++)
+        {
+            Sudoku s;
+            Stopwatch timer;
+            //if (!(i == 7 || i == 8)) {
+            s = new Sudoku(Generator.get(dim, i), dim);
+            timer = new Stopwatch();
+            s.bruteSolve();
+            System.out.println("BOARD  " + i + "\t" + timer.elapsedTime() + " " + s.counter);				
+            //}
+        }
+    }
+
+
+        
 
 
 	static public void main(String[] args)
 	{
-		for (int i = 0; i < Generator.board3.length; i++)
-		{
-			System.out.println();
-			System.out.println("BOARD " + i);
-			Sudoku s;
-			Stopwatch timer;
-			//if (!(i == 7 || i == 8)) {
-				s = new Sudoku(Generator.get(3, i), 3);
-				timer = new Stopwatch();
-				s.findSolution(true, true, true, false);
-				System.out.println("Var, Val, Simple, not Extended  " + i + "\t" + timer.elapsedTime() + " " + s.counter);				
-			//}
-			s = new Sudoku(Generator.get(3, i), 3);
-			timer = new Stopwatch();
-			s.findSolution(true, true, true, true);
-			System.out.println("Var, Val, Simple, Extended      " + i + "\t" + timer.elapsedTime() + " " + s.counter);
-		}
-		
-		// brute
-/*		for (int i = 0; i < Generator.board3.length; i++)
-		{
-			Sudoku s;
-			Stopwatch timer;
-			//if (!(i == 7 || i == 8)) {
-				s = new Sudoku(Generator.get(3, i), 3);
-				timer = new Stopwatch();
-				s.bruteSolve();
-				System.out.println("BOARD  " + i + "\t" + timer.elapsedTime() + " " + s.counter);				
-			//}
-		}
-*/	}
+        /* *******************************************************************************************
+         *  Prints out a basic status for all 9x9 and 16x16 sudokus, WARNING, could take some time
+         ******************************************************************************************* */
+        // printAllStatus();
+
+        
+        /* *******************************************************************************************
+         *  Prints out configured information
+         *  int     param1: base dimension, accepted are 3, 4, 5 (warning 5 can take a while)
+         *  boolean param2: On/Off Variable heuristics
+         *  boolean param3: On/Off Value heuristics
+         *  boolean param4: On/Off Simple inference
+         *  boolean param5: On/Off Extended restrict
+         ******************************************************************************************* */
+        printInfo(3, true, true, true, true);
+        
+        
+        /* *******************************************************************************************
+         *  Prints out information about brute force
+         *  int     param1: base dimension, accepted are 3, 4, 5 (warning 5 can take a while)
+         ******************************************************************************************* */
+        // printBrute(3);
+	
+	}
     
 
 }
