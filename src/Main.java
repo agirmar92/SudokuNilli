@@ -12,11 +12,12 @@ public class Main
 			Sudoku s = new Sudoku(Generator.get(4, i), 4);
 			Stopwatch timer = new Stopwatch();
 			s.findSolution(true, false, true);
-			System.out.print("Var, not val, simple " + i + "\t" + timer.elapsedTime() + " " + s.counter);
-			s = new Sudoku(Generator.get(4, i), 4);
+			System.out.println(s.assignments);
+			System.out.println("Var, not val, simple, normal " + i + "\t" + timer.elapsedTime() + " " + s.counter);
+			/*s = new Sudoku(Generator.get(4, i), 4);
 			timer = new Stopwatch();
-			s.findSolution(true, false, false);
-			System.out.println("\t \t Var, not val, not simple " + i + "\t" + timer.elapsedTime() + " " + s.counter);
+			s.findSolution(true, false, true);
+			System.out.println("\t \t Var, not val, simple, normal " + i + "\t" + timer.elapsedTime() + " " + s.counter);*/
 			
 		}
 		

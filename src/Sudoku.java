@@ -8,6 +8,7 @@ public class Sudoku
 	int dim;	
 	int counter = 0;
 	int depth = 0;
+	int assignments = 0;
 	Stack<Variable> stack = new Stack<Variable>();
 	
 	
@@ -29,6 +30,7 @@ public class Sudoku
 				else  
 				{
 					board[i][j] = new Variable(dim, boardToSolve[i][j], i, j);
+					assignments++;
 				}
 			}
 		}
@@ -115,6 +117,7 @@ public class Sudoku
 				
 			});
 			for (Integer n : curr.domain()) q.add(n);
+			assignments++;
 			while(!q.isEmpty())
 			{
 				int n = q.remove();
@@ -129,8 +132,10 @@ public class Sudoku
 				for (Variable v : neighbours) v.allow(curr.val);
 				stack.pop();
 			}
+			assignments--;
 		}
 		else{
+			assignments++;
 		for (int n : curr.domain())
 		{
 			curr.val = n;
@@ -145,9 +150,11 @@ public class Sudoku
 		}}
 		// de-assign
 		curr.val = 0;
+		assignments--;
 		depth--;
 		return false;
 	}
+	
 	
 	
 	/*
@@ -354,6 +361,7 @@ public class Sudoku
 							if (place) {
 								//put(i, j, num);
 								board[i][j].val = num;
+								assignments++;
 								// restrict
 								Collection<Variable> set = neighbours(board[i][j]);
 								for (Variable var : set)
@@ -397,6 +405,7 @@ public class Sudoku
 						int value = 0;
 						for (int r : var.domain()) value = r;						
 						var.val = value;
+						assignments++;
 						Collection<Variable> neighbours = nboard.freeNeighbours(var);
 						for (Variable v : neighbours) v.restrict(value);
 						changed = true;
