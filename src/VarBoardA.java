@@ -373,11 +373,13 @@ public class VarBoardA
 	            //System.out.println(i + " " + j);
 	        	//if (numbers[i - 1] > numbers[j - 1]) return 1;
 	        	//if (numbers[i - 1] < numbers[j - 1]) return -1;
+	        	if (value_heuristic(curr, i) > value_heuristic(curr, j)) return 1;
+	        	if (value_heuristic(curr, i) < value_heuristic(curr, j)) return -1;
 	        	//if (numberVariables.domain(i).size() > numberVariables.domain(j).size()) return 1;
 	        	//if (numberVariables.domain(i).size() < numberVariables.domain(j).size()) return -1;
 	        	//System.out.println(numberVariables.min(i, curr) + " " + numberVariables.min(j, curr));
-	        	if (numberVariables.min(i, curr) > numberVariables.min(j, curr)) return 1;
-	        	if (numberVariables.min(i, curr) < numberVariables.min(j, curr)) return -1;
+	        	//if (numberVariables.min(i, curr) > numberVariables.min(j, curr)) return 1;
+	        	//if (numberVariables.min(i, curr) < numberVariables.min(j, curr)) return -1;
 	        	return 0;
 	        }
 	    });
@@ -406,6 +408,14 @@ public class VarBoardA
 		return false;
 	}
 	
+	public int value_heuristic(Variable curr, int val)
+	{
+		// look at curr's free neighbours, count how often val is an option
+		Collection<Variable> n = freeNeighbours(curr);
+		int counter = 0;
+		for (Variable var : n) if (var.isOK(val)) counter++;
+		return counter;
+	}
 	
 	public void findSolution(int type)
 	{

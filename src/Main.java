@@ -24,4 +24,11 @@ public class Main
 		}
 		
 	}
+
+		// testing 25x25 board
+/*		VarBoard b = new VarBoard(Generator.get(5, 4), 5);
+		Stopwatch timer = new Stopwatch();
+		b.findSolution(2);
+		System.out.println("newSolved: \t time: " + timer.elapsedTime() + "\t states: " + b.counter);
+*/	}
 }

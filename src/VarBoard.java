@@ -147,6 +147,7 @@ public class VarBoard
 	{
 		int extraEdge = 7;
 		if (dim == 4) extraEdge = 25;
+		if (dim == 5) extraEdge = 36;
 		for (int i = 0; i < dim*dim; i++)
 		{
 			if (i % dim == 0) printEdge(2 * dim * dim + extraEdge);
@@ -154,7 +155,7 @@ public class VarBoard
 			{
 				if (j % dim == 0) System.out.print(" | ");
 				else System.out.print(" ");
-				if (dim == 4) if (0 <= board[i][j].val && board[i][j].val < 10) System.out.print(" "); 
+				if (dim == 4 || dim == 5) if (0 <= board[i][j].val && board[i][j].val < 10) System.out.print(" "); 
 				System.out.print(board[i][j].val);
 			}
 			System.out.print(" |");
@@ -307,8 +308,8 @@ public class VarBoard
 		}
 		
 		/*queue = null;
-		queue = new PriorityQueue<Variable>(dim*dim*dim*dim, new Comparator<Variable>() {
-=======
+		queue = new PriorityQueue<Variable>(dim*dim*dim*dim, new Comparator<Variable>() {*/
+
 		// iterate through the free spots and try to restrict the board more
 		boolean changes = true;
 		while (changes) {
@@ -383,7 +384,6 @@ public class VarBoard
 		
 		/*
 		PriorityQueue<Variable> nqueue = new PriorityQueue<Variable>(dim*dim*dim*dim, new Comparator<Variable>() {
->>>>>>> a2caf2be87ec0ea0de4163690602583521c6a2b4
 	        public int compare(Variable var1, Variable var2) 
 	        {
 	        	Collection<Integer> d1 = var1.domain();
@@ -419,7 +419,10 @@ public class VarBoard
 	{
 		depth++;
 		counter++;
-		//if (counter % 100000 == 0) fancyPrint();
+
+		if (counter % 100000 == 0) fancyPrint();
+		//printAll();
+		//in.next();
 		if (full())
 		{
 			return true;
@@ -483,7 +486,8 @@ public class VarBoard
 			board = simpleInference();
 			newSolve();
 			if (!isSolution()) System.out.println("NOT A SOLUTION !!!");
-			else System.out.println("OK SOLUTION !!!");}
+			else System.out.println("OK SOLUTION !!!");
+		}
 		else 
 		{
 			/*initialRestrict();
@@ -498,6 +502,7 @@ public class VarBoard
 			{
 				ordering.get(board[i][j].domain().size()).add(board[i][j]);
 			}
+<<<<<<< HEAD
 			System.out.println(ordering.toString());*/
 		/*if (type == 1) {initialRestrict();
 		board = simpleInference();
@@ -511,6 +516,11 @@ public class VarBoard
 			//board = simpleInference();
 			newNewSolve();
 		}*/}
+			//System.out.println(ordering.toString());
+			newNewSolve();
+			if (!isSolution()) System.out.println("NOT A SOLUTION !!!");
+			else System.out.println("OK SOLUTION !!!");
+		}
 	}
 	
 	private Variable[][] simpleInference()
@@ -553,9 +563,14 @@ public class VarBoard
 		//fancyPrint();
 		depth++;
 		counter++;
+		//if (counter % 100000 == 0) fancyPrint();
 		if (full())
 		{
+<<<<<<< HEAD
 			System.out.println("SOLVED");
+=======
+			//System.out.println("SOLVED");
+>>>>>>> 6c43f5ef2c4e38153d2933146fa94e3dda829b56
 			//System.out.println("assignments: " + assignments + " " + depth);
 			//fancyPrint();
 			return true;
@@ -588,6 +603,7 @@ public class VarBoard
 				}
 			}
 		}
+<<<<<<< HEAD
 		Variable curr = board[h][k];
 		for (int n : curr.domain())
 		{
@@ -605,16 +621,37 @@ public class VarBoard
 			if(newNewSolve()) return true;
 			// unrestrict
 			for (Variable v : neighbours) 
+=======
+		Variable curr = board[h][k];*/
+		if (curr.domain != null) {
+			for (int n : curr.domain())
+>>>>>>> 6c43f5ef2c4e38153d2933146fa94e3dda829b56
 			{
-				ordering.get(v.domain().size()).remove(v);
-				v.allow(n);
-				ordering.get(v.domain().size()).add(v);
+				curr.val = n;
+				
+				//restrict
+				Collection<Variable> neighbours = freeNeighbours(curr);
+				for (Variable v : neighbours) 
+				{
+					//System.out.println("variable begin moved: " + v);
+					ordering.get(v.domain().size()).remove(v);
+					v.restrict(n);
+					ordering.get(v.domain().size()).add(v);
+				}
+				if(newNewSolve()) return true;
+				// unrestrict
+				for (Variable v : neighbours) 
+				{
+					ordering.get(v.domain().size()).remove(v);
+					v.allow(n);
+					ordering.get(v.domain().size()).add(v);
+				}
 			}
+			// unput
+			curr.val = 0;
+			ordering.get(curr.domain().size()).add(curr);
+			depth--;
 		}
-		// unput
-		curr.val = 0;
-		ordering.get(curr.domain().size()).add(curr);
-		depth--;
 		return false;
 	}*/
 	
