@@ -45,6 +45,40 @@ public class Sudoku
 			}
 		}
 	}
+	
+	public boolean bruteSolve()
+	{
+		//if (++counter % 50000 == 0) fancyPrint();
+		//System.out.println("solve");
+		if (full()) 
+		{
+			//System.out.println("SOLVED");
+			//fancyPrint();
+			if (!isSolution()) {
+				System.out.println("NOT OK SOLUTION!!!");
+				return false;
+			} else {
+				//System.out.println("OK SOLUTION!!!");
+				return true;
+			}
+		}
+		int i = 0, j = 0;
+		search:
+		for (i = 0; i < dim*dim; i++)
+		{
+			for (j = 0; j < dim*dim; j++) if (board[i][j].val == 0) break search;
+		}
+		for (int n = 1; n <= dim*dim; n++)
+		{
+			board[i][j].val = n;
+			if (isValid(i, j))
+			{
+				if(bruteSolve()) return true;
+			}
+		}
+		board[i][j].val = 0;
+		return false;
+	}
 	/*
 	 * find solution with different methods:
 	 * - variable heuristics

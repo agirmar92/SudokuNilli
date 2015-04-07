@@ -45,25 +45,37 @@ public class Main
 
 	static public void main(String[] args)
 	{
-
-		for (int i = 0; i < Generator.board4.length; i++)
+		for (int i = 0; i < Generator.board3.length; i++)
 		{
 			System.out.println();
 			System.out.println("BOARD " + i);
 			Sudoku s;
 			Stopwatch timer;
 			//if (!(i == 7 || i == 8)) {
-				s = new Sudoku(Generator.get(4, i), 4);
+				s = new Sudoku(Generator.get(3, i), 3);
 				timer = new Stopwatch();
-				s.findSolution(true, false, true, true);
-				System.out.println("Var, not Val, Simple, Extended  " + i + "\t" + timer.elapsedTime() + " " + s.counter);				
+				s.findSolution(true, true, true, false);
+				System.out.println("Var, Val, Simple, not Extended  " + i + "\t" + timer.elapsedTime() + " " + s.counter);				
 			//}
-			s = new Sudoku(Generator.get(4, i), 4);
+			s = new Sudoku(Generator.get(3, i), 3);
 			timer = new Stopwatch();
 			s.findSolution(true, true, true, true);
 			System.out.println("Var, Val, Simple, Extended      " + i + "\t" + timer.elapsedTime() + " " + s.counter);
 		}
-	}
+		
+		// brute
+/*		for (int i = 0; i < Generator.board3.length; i++)
+		{
+			Sudoku s;
+			Stopwatch timer;
+			//if (!(i == 7 || i == 8)) {
+				s = new Sudoku(Generator.get(3, i), 3);
+				timer = new Stopwatch();
+				s.bruteSolve();
+				System.out.println("BOARD  " + i + "\t" + timer.elapsedTime() + " " + s.counter);				
+			//}
+		}
+*/	}
     
 
 }
