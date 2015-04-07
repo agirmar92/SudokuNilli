@@ -167,7 +167,7 @@ public class VarBoardA
 	 * This function looks at the hardcoded numbers and restricts the domains
 	 * of the other numbers so that they are compatible with the hardcoded ones
 	 */
-	public void initialRestrict()
+	public void initialRestrict(boolean more)
 	{
 		//int count = 0;
 		for (int i = 0; i < dim*dim; i++)
@@ -188,10 +188,9 @@ public class VarBoardA
 				}
 			}
 		}
-		
+		if (!more) return;
 		/*queue = null;
-		queue = new PriorityQueue<Variable>(dim*dim*dim*dim, new Comparator<Variable>() {
-=======
+		queue = new PriorityQueue<Variable>(dim*dim*dim*dim, new Comparator<Variable>() {*/
 		// iterate through the free spots and try to restrict the board more
 		boolean changes = true;
 		while (changes) {
@@ -244,7 +243,8 @@ public class VarBoardA
 							}
 							// place it
 							if (place) {
-								put(i, j, num);
+								//put(i, j, num);
+								board[i][j].val = num;
 								// restrict
 								Collection<Variable> set = neighbours(board[i][j]);
 								for (Variable var : set)
@@ -365,7 +365,7 @@ public class VarBoardA
 			int[][] temp = new int[dim * dim][dim * dim];
 			for (int i = 0; i < dim * dim; i++) for (int j = 0; j < dim * dim; j++) temp[i][j] = board[i][j].val;
 			VarBoardA newBoard = new VarBoardA(temp, dim);
-			newBoard.initialRestrict();
+			newBoard.initialRestrict(false);
 			newBoard.board = simpleInference();
 			if (newBoard.newSolve()) {board = newBoard.board; counter += newBoard.counter; return true;}
 			return false;
@@ -397,7 +397,7 @@ public class VarBoardA
 		Variable curr = board[h][k];
 		
 		// Value heuristic:
-		PriorityQueue<Integer> queue = new PriorityQueue<Integer>(16, new Comparator<Integer>() {
+		/*PriorityQueue<Integer> queue = new PriorityQueue<Integer>(16, new Comparator<Integer>() {
 	        public int compare(Integer i, Integer j) {
 	            //System.out.println(i + " " + j);
 	        	//if (numbers[i - 1] > numbers[j - 1]) return 1;
@@ -411,11 +411,11 @@ public class VarBoardA
 	        	//if (numberVariables.min(i, curr) < numberVariables.min(j, curr)) return -1;
 	        	return 0;
 	        }
-	    });
-		for (int n : curr.domain()) {queue.add(n);}
+	    });*/
+		for (int n : curr.domain()) {/*queue.add(n);}
 		while(!queue.isEmpty())
-		{
-			int n = queue.remove();
+		{*/
+			//int n = queue.remove();
 			numbers[n - 1]++;
 			curr.val = n;
 			numberVariables.assign(n, curr.x, curr.y);
@@ -449,7 +449,7 @@ public class VarBoardA
 	public boolean findSolution(int type)
 	{
 		if (type == 1) {
-			initialRestrict();
+			initialRestrict(true);
 			board = simpleInference();
 			solve();
 			if (!isSolution()) {System.out.println("NOT A SOLUTION !!!"); return false;}
@@ -457,11 +457,11 @@ public class VarBoardA
 			}
 		else 
 		{
-			initialRestrict();
+			initialRestrict(true);
 			board = simpleInference();
 			newSolve();
 			if (!isSolution()) {System.out.println("NOT A SOLUTION !!!"); return false;}
-			else {System.out.println("OK SOLUTION !!!"); return true;}
+			else {/*System.out.println("OK SOLUTION !!!");*/ return true;}
 			
 			/*for (int i = 0; i < dim * dim; i++) for (int j = 0; j < dim * dim; j++) for (int k = 0; k < dim * dim; k++)
 			{
