@@ -1,3 +1,4 @@
+package Sudoku;
 import java.util.Collection;
 import java.util.*;
 
@@ -53,11 +54,11 @@ public class Main
 			Stopwatch timer = new Stopwatch();
 			s.findSolution(true, false, true);
 			System.out.println(s.assignments);
-			System.out.println("Var, not val, simple, normal " + i + "\t" + timer.elapsedTime() + " " + s.counter);
-			/*s = new Sudoku(Generator.get(4, i), 4);
+			System.out.print("Var, not val, simple, normal " + i + "\t" + timer.elapsedTime() + " " + s.counter);
+			s = new Sudoku(Generator.get(4, i), 4);
 			timer = new Stopwatch();
-			s.findSolution(true, false, true);
-			System.out.println("\t \t Var, not val, simple, normal " + i + "\t" + timer.elapsedTime() + " " + s.counter);*/
+			s.findSolution(true, true, true);
+			System.out.println("\t \t Var and val, simple, normal " + i + "\t" + timer.elapsedTime() + " " + s.counter);
 			
 		}
 

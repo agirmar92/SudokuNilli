@@ -100,7 +100,6 @@ public class Sudoku
 				for (k = 0; k < dim*dim; k++) if (board[h][k].val == 0) break search;
 			}
 		}
-		
 		Variable curr = board[h][k];
 
 		if (valHeuristic && curr.domain().size() > 1)
@@ -121,7 +120,7 @@ public class Sudoku
 			while(!q.isEmpty())
 			{
 				int n = q.remove();
-				//System.out.println(valHeuristic(curr,  n) + "\t \t " + depth);
+				//System.out.println(valHeuristic(curr,  n) + "\t" + depth);
 				curr.val = n;
 				stack.push(curr);
 				//restrict
@@ -162,6 +161,7 @@ public class Sudoku
 	 */
 	public boolean full()
 	{
+		//return (assignments == dim * dim * dim * dim);
 		for (int i = 0; i < dim*dim; i++)
 		{
 			for (int j = 0; j < dim*dim; j++) if (board[i][j].val == 0) return false;
@@ -172,11 +172,12 @@ public class Sudoku
 	public int valHeuristic(Variable curr, int i)
 	{
 
+		int count = 0;
 		for (Variable neighbour : freeNeighbours(curr))
 		{
-			if (neighbour.isOK(i)) counter++;
+			if (neighbour.isOK(i)) count++;
 		}
-		return counter;
+		return count;
 	}
 
 	public boolean isValid(int x, int y)

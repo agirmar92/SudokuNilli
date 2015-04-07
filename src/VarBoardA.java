@@ -1,3 +1,4 @@
+package Sudoku;
 //import Sudoku.Board.DistinctSet;
 import java.util.*;
 
@@ -469,11 +470,11 @@ public class VarBoardA
 			newSolve();
 			if (!isSolution()) {System.out.println("NOT A SOLUTION !!!"); return false;}
 			else {/*System.out.println("OK SOLUTION !!!");*/ return true;}
-			initialRestrict(true);
+			//initialRestrict();
 			//board = simpleInference();
-			newSolve();
-			if (!isSolution()) {System.out.print("ERR"); return false;}
-			else {System.out.print("OK"); return true;}
+			//newSolve();
+			/*if (!isSolution()) {System.out.print("ERR"); return false;}
+			else {System.out.print("OK"); return true;}*/
 			
 			/*for (int i = 0; i < dim * dim; i++) for (int j = 0; j < dim * dim; j++) for (int k = 0; k < dim * dim; k++)
 			{
