@@ -48,22 +48,24 @@ public class Main
         else if(dim == 5) size = Generator.board5.length;
         else return;
 
-        String svar = variable ? "T" : "F";
-        String sval = value ? "T" : "F";
-        String sinf = inference ? "T" : "F";
-        String sext = extended ? "T" : "F";
+        String svar = variable ? "True" : "False";
+        String sval = value ? "True" : "False";
+        String sinf = inference ? "True" : "False";
+        String sext = extended ? "True" : "False";
 
+        System.out.println("Solve parameters; Size: " + (dim*dim) + "x" + (dim*dim) + ", Var: " + svar + ", Val: " + sval + ", Simple: " + sinf + ", Extended: " + sext);
 
+        
+        System.out.print("\nBoardID\tTime\tStates\n");
         for (int i = 0; i < size; i++)
 		{
-			System.out.println();
-			System.out.println("BOARD " + i);
+            System.out.print(i + "\t");
 			Sudoku s;
 			Stopwatch timer;
             s = new Sudoku(Generator.get(dim, i), dim);
             timer = new Stopwatch();
             s.findSolution(variable, value, inference, extended);
-            System.out.println("Var, Val, Simple, not Extended  " + i + "\t" + timer.elapsedTime() + " " + s.counter);				
+            System.out.print("\t" + timer.elapsedTime() + "\t" + s.counter + "\n");				
 		}
     }
 
