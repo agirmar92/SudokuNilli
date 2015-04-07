@@ -1,4 +1,3 @@
-package Sudoku;
 import java.util.*;
 
 public class Sudoku
@@ -46,16 +45,18 @@ public class Sudoku
 			}
 		}
 	}
-	
 	/*
-	 * Solution functions
+	 * find solution with different methods:
+	 * - variable heuristics
+	 * - value heuristics
+	 * - simple inference and 
+	 * - extended initial restrict
 	 */
-	
-	public boolean findSolution(boolean varHeuristic, boolean val, boolean simple)
+	public boolean findSolution(boolean var, boolean val, boolean simple, boolean ext)
 	{
-		initialRestrict(true);
+		initialRestrict(ext);
 		if (simple) board = simpleInference();
-		solve(varHeuristic, val);
+		solve(var, val);
 		if (!isSolution()) {System.out.println("NOT A SOLUTION !!!"); return false;}
 		else {/*System.out.println("OK SOLUTION !!!");*/ return true;}
 	}
@@ -101,7 +102,7 @@ public class Sudoku
 			}
 		}
 		
-		Variable curr = board[h][k];
+		final Variable curr = board[h][k];
 
 		if (valHeuristic && curr.domain().size() > 1)
 		{
@@ -154,9 +155,6 @@ public class Sudoku
 		depth--;
 		return false;
 	}
-	
-	
-	
 	/*
 	 * Helper functions 
 	 */
@@ -307,6 +305,12 @@ public class Sudoku
 			}
 		}
 		if (!more) return;
+		
+		extendedRestrict();
+	}
+	
+	private void extendedRestrict()
+	{
 		// iterate through the free spots and try to restrict the board more
 		boolean changes = true;
 		while (changes) {
