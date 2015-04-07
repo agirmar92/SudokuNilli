@@ -1,4 +1,3 @@
-package Sudoku;
 //import Sudoku.Board.DistinctSet;
 import java.util.*;
 
@@ -50,6 +49,12 @@ public class VarBoardA
 				board[i][j] = new Variable(dim, 0, i, j);
 			}
 		}
+	}
+	public boolean put(int x, int y, int val)
+	{
+		if (x >= dim*dim || y >= dim*dim || x < 0 || y < 0 || val > dim*dim) return false;
+		board[x][y].val = val;
+		return isValid(x, y);
 	}
 	public boolean full()
 	{
@@ -244,6 +249,7 @@ public class VarBoardA
 							// place it
 							if (place) {
 								//put(i, j, num);
+
 								board[i][j].val = num;
 								// restrict
 								Collection<Variable> set = neighbours(board[i][j]);
@@ -266,7 +272,6 @@ public class VarBoardA
 		
 		/*
 		PriorityQueue<Variable> nqueue = new PriorityQueue<Variable>(dim*dim*dim*dim, new Comparator<Variable>() {
->>>>>>> a2caf2be87ec0ea0de4163690602583521c6a2b4
 	        public int compare(Variable var1, Variable var2) 
 	        {
 	        	Collection<Integer> d1 = var1.domain();
@@ -359,7 +364,7 @@ public class VarBoardA
 		System.out.println(stack);
 		in.next();*/
 		
-		if (depth == depthLimit)
+/*		if (depth == depthLimit)
 		{
 			//System.out.println("reset");
 			int[][] temp = new int[dim * dim][dim * dim];
@@ -370,7 +375,7 @@ public class VarBoardA
 			if (newBoard.newSolve()) {board = newBoard.board; counter += newBoard.counter; return true;}
 			return false;
 		}
-		
+*/		
 		if (full())
 		{
 			//fancyPrint();
@@ -394,7 +399,7 @@ public class VarBoardA
 				}
 			}
 		}
-		Variable curr = board[h][k];
+		final Variable curr = board[h][k];
 		
 		// Value heuristic:
 		/*PriorityQueue<Integer> queue = new PriorityQueue<Integer>(16, new Comparator<Integer>() {
@@ -402,13 +407,13 @@ public class VarBoardA
 	            //System.out.println(i + " " + j);
 	        	//if (numbers[i - 1] > numbers[j - 1]) return 1;
 	        	//if (numbers[i - 1] < numbers[j - 1]) return -1;
-	        	if (value_heuristic(curr, i) > value_heuristic(curr, j)) return 1;
-	        	if (value_heuristic(curr, i) < value_heuristic(curr, j)) return -1;
+	        	//if (value_heuristic(curr, i) > value_heuristic(curr, j)) return 1;
+	        	//if (value_heuristic(curr, i) < value_heuristic(curr, j)) return -1;
 	        	//if (numberVariables.domain(i).size() > numberVariables.domain(j).size()) return 1;
 	        	//if (numberVariables.domain(i).size() < numberVariables.domain(j).size()) return -1;
 	        	//System.out.println(numberVariables.min(i, curr) + " " + numberVariables.min(j, curr));
-	        	//if (numberVariables.min(i, curr) > numberVariables.min(j, curr)) return 1;
-	        	//if (numberVariables.min(i, curr) < numberVariables.min(j, curr)) return -1;
+	        	if (numberVariables.min(i, curr) > numberVariables.min(j, curr)) return 1;
+	        	if (numberVariables.min(i, curr) < numberVariables.min(j, curr)) return -1;
 	        	return 0;
 	        }
 	    });*/
@@ -433,7 +438,7 @@ public class VarBoardA
 		// unput
 		curr.val = 0;
 		//assignments--;
-		depth--;
+		//depth--;
 		return false;
 	}
 	
@@ -451,9 +456,11 @@ public class VarBoardA
 		if (type == 1) {
 			initialRestrict(true);
 			board = simpleInference();
+			initialRestrict(true);
+			//board = simpleInference();
 			solve();
-			if (!isSolution()) {System.out.println("NOT A SOLUTION !!!"); return false;}
-			else {System.out.println("OK SOLUTION !!!"); return true;}
+			if (!isSolution()) {System.out.print("ERR"); return false;}
+			else {System.out.print("OK"); return true;}
 			}
 		else 
 		{
@@ -462,6 +469,11 @@ public class VarBoardA
 			newSolve();
 			if (!isSolution()) {System.out.println("NOT A SOLUTION !!!"); return false;}
 			else {/*System.out.println("OK SOLUTION !!!");*/ return true;}
+			initialRestrict(true);
+			//board = simpleInference();
+			newSolve();
+			if (!isSolution()) {System.out.print("ERR"); return false;}
+			else {System.out.print("OK"); return true;}
 			
 			/*for (int i = 0; i < dim * dim; i++) for (int j = 0; j < dim * dim; j++) for (int k = 0; k < dim * dim; k++)
 			{

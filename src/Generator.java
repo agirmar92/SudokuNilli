@@ -1,5 +1,4 @@
 //import java.lang.reflect.Constructor;
-package Sudoku;
 import java.util.*;
 
 //import aima.core.util.datastructure.Pair;
