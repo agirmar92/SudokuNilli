@@ -517,10 +517,10 @@ public class VarBoard
 			newNewSolve();
 		}*/}
 			//System.out.println(ordering.toString());
-			newNewSolve();
+			/*newNewSolve();
 			if (!isSolution()) System.out.println("NOT A SOLUTION !!!");
 			else System.out.println("OK SOLUTION !!!");
-		}
+		}*/
 	}
 	
 	private Variable[][] simpleInference()
@@ -622,10 +622,9 @@ public class VarBoard
 			// unrestrict
 			for (Variable v : neighbours) 
 =======
-		Variable curr = board[h][k];*/
+		Variable curr = board[h][k];
 		if (curr.domain != null) {
 			for (int n : curr.domain())
->>>>>>> 6c43f5ef2c4e38153d2933146fa94e3dda829b56
 			{
 				curr.val = n;
 				

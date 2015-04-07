@@ -5,6 +5,7 @@ import java.util.*;
 public class VarBoardA
 {
 	Variable[][] board;
+	int depthLimit = 10;
 	int dim;	
 	int counter = 0;
 	PriorityQueue<Variable> queue;
@@ -35,6 +36,18 @@ public class VarBoardA
 					board[i][j] = new Variable(dim, boardToSolve[i][j], i, j);
 					numbers[board[i][j].val - 1]++;
 				}
+			}
+		}
+	}
+	
+	public VarBoardA(int d)
+	{
+		dim = d;
+		board = new Variable[dim*dim][dim*dim];
+		numbers = new int[dim * dim];
+		for (int i = 0; i < dim*dim; i++) {
+			for (int j = 0; j < dim*dim; j++) {
+				board[i][j] = new Variable(dim, 0, i, j);
 			}
 		}
 	}
@@ -292,6 +305,7 @@ public class VarBoardA
 		//if (counter % 1000 == 0) numberVariables.print();
 		if (full())
 		{
+			//fancyPrint();
 			return true;
 		}
 		// Method 4
@@ -341,7 +355,22 @@ public class VarBoardA
 		depth++;
 		counter++;
 
-		//if (counter % 10000 == 0) {fancyPrint(); numberVariables.print();}
+		/*fancyPrint();
+		System.out.println(stack);
+		in.next();*/
+		
+		if (depth == depthLimit)
+		{
+			//System.out.println("reset");
+			int[][] temp = new int[dim * dim][dim * dim];
+			for (int i = 0; i < dim * dim; i++) for (int j = 0; j < dim * dim; j++) temp[i][j] = board[i][j].val;
+			VarBoardA newBoard = new VarBoardA(temp, dim);
+			newBoard.initialRestrict();
+			newBoard.board = simpleInference();
+			if (newBoard.newSolve()) {board = newBoard.board; counter += newBoard.counter; return true;}
+			return false;
+		}
+		
 		if (full())
 		{
 			//fancyPrint();
@@ -417,27 +446,24 @@ public class VarBoardA
 		return counter;
 	}
 	
-	public void findSolution(int type)
+	public boolean findSolution(int type)
 	{
 		if (type == 1) {
 			initialRestrict();
 			board = simpleInference();
 			solve();
-			if (!isSolution()) System.out.println("NOT A SOLUTION !!!");
-			else System.out.println("OK SOLUTION !!!");
+			if (!isSolution()) {System.out.println("NOT A SOLUTION !!!"); return false;}
+			else {System.out.println("OK SOLUTION !!!"); return true;}
 			}
 		else 
 		{
 			initialRestrict();
 			board = simpleInference();
-			
-			
-			
 			newSolve();
-			if (!isSolution()) System.out.println("NOT A SOLUTION !!!");
-			else System.out.println("OK SOLUTION !!!");
+			if (!isSolution()) {System.out.println("NOT A SOLUTION !!!"); return false;}
+			else {System.out.println("OK SOLUTION !!!"); return true;}
 			
-			for (int i = 0; i < dim * dim; i++) for (int j = 0; j < dim * dim; j++) for (int k = 0; k < dim * dim; k++)
+			/*for (int i = 0; i < dim * dim; i++) for (int j = 0; j < dim * dim; j++) for (int k = 0; k < dim * dim; k++)
 			{
 				int val = numberVariables.board[i][j][k];
 				if (val > 0)
@@ -475,13 +501,13 @@ public class VarBoardA
 						}
 					}
 				}
-			}
+			}*/
 		}
 	}
 	
 	private Variable[][] simpleInference()
 	{
-		VarBoard nboard = new VarBoard(dim);
+		VarBoardA nboard = new VarBoardA(dim);
 		for (int i = 0; i < dim * dim; i++) for (int j = 0; j < dim * dim; j++) nboard.board[i][j] = board[i][j].copy();
 		
 		boolean changed = true;
