@@ -1,0 +1,586 @@
+BOARD 0
+Var, not Val, not Simple, not Extended  0	0.065 238
+Var, not Val, not Simple, Extended 	    0	0.066 174
+
+BOARD 1
+Var, not Val, not Simple, not Extended  1	0.088 2485
+Var, not Val, not Simple, Extended 	    1	0.049 784
+
+BOARD 2
+Var, not Val, not Simple, not Extended  2	8.206 553087
+Var, not Val, not Simple, Extended 	    2	0.023 1235
+
+BOARD 3
+Var, not Val, not Simple, not Extended  3	0.0010 109
+Var, not Val, not Simple, Extended 	    3	0.0020 1
+
+BOARD 4
+Var, not Val, not Simple, not Extended  4	0.0020 107
+Var, not Val, not Simple, Extended 	    4	0.0020 1
+
+BOARD 5
+Var, not Val, not Simple, not Extended  5	0.0030 145
+Var, not Val, not Simple, Extended 	    5	0.0030 1
+
+BOARD 6
+Var, not Val, not Simple, not Extended  6	0.0020 135
+Var, not Val, not Simple, Extended 	    6	0.0040 62
+
+BOARD 7
+Var, not Val, not Simple, not Extended  8 	Took too long
+Var, not Val, not Simple, Extended 	    7	43.497 3446543
+
+BOARD 8
+Var, not Val, not Simple, not Extended  8 	Took too long
+Var, not Val, not Simple, Extended 	    8	93.397 7023322
+
+BOARD 9
+Var, not Val, not Simple, not Extended  9	12.508 688831
+Var, not Val, not Simple, Extended 	    9	0.065 4225
+
+BOARD 10
+Var, not Val, not Simple, not Extended  10	0.0050 317
+Var, not Val, not Simple, Extended 	    10	0.0080 327
+
+BOARD 11
+Var, not Val, not Simple, not Extended  11	3.195 207162
+Var, not Val, not Simple, Extended 	    11	0.0090 388
+
+BOARD 12
+Var, not Val, not Simple, not Extended  12	0.248 14116
+Var, not Val, not Simple, Extended 	    12	0.011 63
+
+
+
+
+BOARD 0
+Var, Val, Simple, not Extended  0	0.22 3980
+Var, Val, Simple, Extended      0	0.074 813
+
+BOARD 1
+Var, Val, Simple, not Extended  1	0.195 13005
+Var, Val, Simple, Extended      1	0.123 4283
+
+BOARD 2
+Var, Val, Simple, not Extended  2	0.353 43381
+Var, Val, Simple, Extended      2	0.0090 306
+
+BOARD 3
+Var, Val, Simple, not Extended  3	0.0040 1
+Var, Val, Simple, Extended      3	0.0020 1
+
+BOARD 4
+Var, Val, Simple, not Extended  4	0.0030 1
+Var, Val, Simple, Extended      4	0.0010 1
+
+BOARD 5
+Var, Val, Simple, not Extended  5	0.0050 170
+Var, Val, Simple, Extended      5	0.0030 1
+
+BOARD 6
+Var, Val, Simple, not Extended  6	0.0060 260
+Var, Val, Simple, Extended      6	0.0030 52
+
+BOARD 7
+Var, Val, Simple, not Extended  7 	Took too long
+Var, Val, Simple, Extended      7	30.228 4572096
+
+BOARD 8
+Var, Val, Simple, not Extended  8 	Took too long
+Var, Val, Simple, Extended      8	137.16 15981209
+
+BOARD 9
+Var, Val, Simple, not Extended  9	6.699 773819
+Var, Val, Simple, Extended      9	0.169 22335
+
+BOARD 10
+Var, Val, Simple, not Extended  10	0.011 1044
+Var, Val, Simple, Extended      10	0.013 630
+
+BOARD 11
+Var, Val, Simple, not Extended  11	18.991 2358522
+Var, Val, Simple, Extended      11	0.0070 148
+
+BOARD 12
+Var, Val, Simple, not Extended  12	1.874 242050
+Var, Val, Simple, Extended      12	0.012 1
+
+
+
+
+BOARD 0
+Var, Val, not Simple, Extended  0	0.178 818
+Var, Val, Simple, Extended      0	0.077 813
+
+BOARD 1
+Var, Val, not Simple, Extended  1	0.054 4305
+Var, Val, Simple, Extended      1	0.044 4283
+
+BOARD 2
+Var, Val, not Simple, Extended  2	0.01 310
+Var, Val, Simple, Extended      2	0.011 306
+
+BOARD 3
+Var, Val, not Simple, Extended  3	0.0010 1
+Var, Val, Simple, Extended      3	0.0020 1
+
+BOARD 4
+Var, Val, not Simple, Extended  4	0.0010 1
+Var, Val, Simple, Extended      4	0.0020 1
+
+BOARD 5
+Var, Val, not Simple, Extended  5	0.0030 1
+Var, Val, Simple, Extended      5	0.0030 1
+
+BOARD 6
+Var, Val, not Simple, Extended  6	0.0030 72
+Var, Val, Simple, Extended      6	0.0030 52
+
+BOARD 7
+Var, Val, not Simple, Extended  7	31.321 4572106
+Var, Val, Simple, Extended      7	30.47 4572096
+
+BOARD 8
+Var, Val, not Simple, Extended  8	112.657 15981213
+Var, Val, Simple, Extended      8	112.78 15981209
+
+BOARD 9
+Var, Val, not Simple, Extended  9	0.171 22342
+Var, Val, Simple, Extended      9	0.221 22335
+
+BOARD 10
+Var, Val, not Simple, Extended  10	0.0090 656
+Var, Val, Simple, Extended      10	0.0090 630
+
+BOARD 11
+Var, Val, not Simple, Extended  11	0.0070 160
+Var, Val, Simple, Extended      11	0.0080 148
+
+BOARD 12
+Var, Val, not Simple, Extended  12	0.012 63
+Var, Val, Simple, Extended      12	0.012 1
+
+
+
+
+BOARD 0
+Var, not Val, Simple, Extended  0	0.172 169
+Var, Val, Simple, Extended      0	0.14 813
+
+BOARD 1
+Var, not Val, Simple, Extended  1	0.052 762
+Var, Val, Simple, Extended      1	0.135 4283
+
+BOARD 2
+Var, not Val, Simple, Extended  2	0.071 1231
+Var, Val, Simple, Extended      2	0.0090 306
+
+BOARD 3
+Var, not Val, Simple, Extended  3	0.0020 1
+Var, Val, Simple, Extended      3	0.0010 1
+
+BOARD 4
+Var, not Val, Simple, Extended  4	0.0020 1
+Var, Val, Simple, Extended      4	0.0010 1
+
+BOARD 5
+Var, not Val, Simple, Extended  5	0.0040 1
+Var, Val, Simple, Extended      5	0.0030 1
+
+BOARD 6
+Var, not Val, Simple, Extended  6	0.0030 42
+Var, Val, Simple, Extended      6	0.0040 52
+
+BOARD 7
+Var, not Val, Simple, Extended  7	43.315 3446533
+Var, Val, Simple, Extended      7	29.476 4572096
+
+BOARD 8
+Var, not Val, Simple, Extended  8	91.911 7023318
+Var, Val, Simple, Extended      8	117.084 15981209
+
+BOARD 9
+Var, not Val, Simple, Extended  9	0.062 4218
+Var, Val, Simple, Extended      9	0.184 22335
+
+BOARD 10
+Var, not Val, Simple, Extended  10	0.0090 301
+Var, Val, Simple, Extended      10	0.0090 630
+
+BOARD 11
+Var, not Val, Simple, Extended  11	0.0090 376
+Var, Val, Simple, Extended      11	0.0070 148
+
+BOARD 12
+Var, not Val, Simple, Extended  12	0.013 1
+Var, Val, Simple, Extended      12	0.012 1
+
+
+
+
+BOARD 0
+not Var, Val, Simple, Extended  0	0.432 26050
+Var, Val, Simple, Extended      0	0.03 117
+
+BOARD 1
+not Var, Val, Simple, Extended  1	0.559 243134
+Var, Val, Simple, Extended      1	0.015 435
+
+BOARD 2
+not Var, Val, Simple, Extended  2	1.455 651671
+Var, Val, Simple, Extended      2	0.022 1231
+
+BOARD 3
+not Var, Val, Simple, Extended  3	0.0010 1
+Var, Val, Simple, Extended      3	0.0010 1
+
+BOARD 4
+not Var, Val, Simple, Extended  4	0.0010 1
+Var, Val, Simple, Extended      4	0.0010 1
+
+BOARD 5
+not Var, Val, Simple, Extended  5	0.0030 1
+Var, Val, Simple, Extended      5	0.0040 1
+
+BOARD 6
+not Var, Val, Simple, Extended  6	0.0030 64
+Var, Val, Simple, Extended      6	0.0030 40
+
+BOARD 7
+not Var, Val, Simple, Extended  7 	Took too long
+Var, Val, Simple, Extended      7	41.308 2626628
+
+BOARD 8
+not Var, Val, Simple, Extended  8 	Took too long
+Var, Val, Simple, Extended      8	128.819 8248348
+
+BOARD 9
+not Var, Val, Simple, Extended  9	2.507 1295457
+Var, Val, Simple, Extended      9	0.199 12077
+
+BOARD 10
+not Var, Val, Simple, Extended  10	0.207 106416
+Var, Val, Simple, Extended      10	0.015 241
+
+BOARD 11
+not Var, Val, Simple, Extended  11	0.012 2695
+Var, Val, Simple, Extended      11	0.011 308
+
+BOARD 12
+not Var, Val, Simple, Extended  12	0.012 1
+Var, Val, Simple, Extended      12	0.013 1
+
+
+
+
+BOARD 0
+Var, not Val, not Simple, Extended  0	0.115 174
+Var, Val, Simple, Extended          0	0.113 117
+
+BOARD 1
+Var, not Val, not Simple, Extended  1	0.161 784
+Var, Val, Simple, Extended          1	0.068 435
+
+BOARD 2
+Var, not Val, not Simple, Extended  2	0.059 1235
+Var, Val, Simple, Extended          2	0.027 1231
+
+BOARD 3
+Var, not Val, not Simple, Extended  3	0.0010 1
+Var, Val, Simple, Extended          3	0.0010 1
+
+BOARD 4
+Var, not Val, not Simple, Extended  4	0.0010 1
+Var, Val, Simple, Extended          4	0.0020 1
+
+BOARD 5
+Var, not Val, not Simple, Extended  5	0.0030 1
+Var, Val, Simple, Extended          5	0.0030 1
+
+BOARD 6
+Var, not Val, not Simple, Extended  6	0.0030 62
+Var, Val, Simple, Extended          6	0.0040 40
+
+BOARD 7
+Var, Val, Simple, Extended          7	33.504 2626628
+
+BOARD 8
+Var, Val, Simple, Extended          8	111.49 8248348
+
+BOARD 9
+Var, not Val, not Simple, Extended  9	0.064 4225
+Var, Val, Simple, Extended          9	0.167 12077
+
+BOARD 10
+Var, not Val, not Simple, Extended  10	0.0090 327
+Var, Val, Simple, Extended          10	0.0080 241
+
+BOARD 11
+Var, not Val, not Simple, Extended  11	0.01 388
+Var, Val, Simple, Extended          11	0.0090 308
+
+BOARD 12
+Var, not Val, not Simple, Extended  12	0.012 63
+Var, Val, Simple, Extended          12	0.013 1
+
+
+
+
+BOARD 0
+Var, not Val, not Simple, Extended  0	0.127 174
+Var, Val, Simple, Extended          0	0.082 117
+
+BOARD 1
+Var, not Val, not Simple, Extended  1	0.231 784
+Var, Val, Simple, Extended          1	0.121 435
+
+BOARD 2
+Var, not Val, not Simple, Extended  2	0.07 1235
+Var, Val, Simple, Extended          2	0.071 1231
+
+BOARD 3
+Var, not Val, not Simple, Extended  3	0.0010 1
+Var, Val, Simple, Extended          3	0.0020 1
+
+BOARD 4
+Var, not Val, not Simple, Extended  4	0.0020 1
+Var, Val, Simple, Extended          4	0.011 1
+
+BOARD 5
+Var, not Val, not Simple, Extended  5	0.0030 1
+Var, Val, Simple, Extended          5	0.0090 1
+
+BOARD 6
+Var, not Val, not Simple, Extended  6	0.0040 62
+Var, Val, Simple, Extended          6	0.0050 40
+
+BOARD 7
+Var, not Val, not Simple, Extended  7	42.394 3446543
+Var, Val, Simple, Extended          7	33.037 2626628
+
+BOARD 8
+Var, not Val, not Simple, Extended  8	92.631 7023322
+Var, Val, Simple, Extended          8	109.514 8248348
+
+BOARD 9
+Var, not Val, not Simple, Extended  9	0.087 4225
+Var, Val, Simple, Extended          9	0.191 12077
+
+BOARD 10
+Var, not Val, not Simple, Extended  10	0.0090 327
+Var, Val, Simple, Extended          10	0.0080 241
+
+BOARD 11
+Var, not Val, not Simple, Extended  11	0.0090 388
+Var, Val, Simple, Extended          11	0.0090 308
+
+BOARD 12
+Var, not Val, not Simple, Extended  12	0.012 63
+Var, Val, Simple, Extended          12	0.012 1
+
+
+
+
+
+Brute Force 16x16:
+BOARD  0	37.677 0
+BOARD  1	17.58 0
+BOARD  2 	Took too long
+BOARD  3	0.059 0
+BOARD  4	0.0020 0
+BOARD  5	9.143 0
+BOARD  6	0.09 0
+BOARD  7 	Took too long
+BOARD  8 	Took too long
+BOARD  9 	Took too long
+BOARD  10 	Took too long
+BOARD  11 	Took too long
+BOARD  12 	Took too long
+
+
+
+
+Brute Force 9x9:
+BOARD  0	0.181 0
+BOARD  1	0.016 0
+BOARD  2	0.094 0
+BOARD  3	0.0010 0
+BOARD  4	0.0030 0
+BOARD  5	0.025 0
+BOARD  6	0.122 0
+BOARD  7	0.0070 0
+BOARD  8	0.011 0
+BOARD  9	0.061 0
+
+
+
+
+BOARD 0
+not Var, Val, Simple, Extended  0	0.206 5868
+Var, Val, Simple, Extended      0	0.012 359
+
+BOARD 1
+not Var, Val, Simple, Extended  1	0.015 87
+Var, Val, Simple, Extended      1	0.0060 53
+
+BOARD 2
+not Var, Val, Simple, Extended  2	0.066 2565
+Var, Val, Simple, Extended      2	0.045 2177
+
+BOARD 3
+not Var, Val, Simple, Extended  3	0.0030 184
+Var, Val, Simple, Extended      3	0.013 42
+
+BOARD 4
+not Var, Val, Simple, Extended  4	0.043 185
+Var, Val, Simple, Extended      4	0.0010 43
+
+BOARD 5
+not Var, Val, Simple, Extended  5	0.0030 173
+Var, Val, Simple, Extended      5	0.0090 28
+
+BOARD 6
+not Var, Val, Simple, Extended  6	0.0010 239
+Var, Val, Simple, Extended      6	0.0020 46
+
+BOARD 7
+not Var, Val, Simple, Extended  7	0.0030 780
+Var, Val, Simple, Extended      7	0.0010 185
+
+BOARD 8
+not Var, Val, Simple, Extended  8	0.0010 425
+Var, Val, Simple, Extended      8	0.0 33
+
+BOARD 9
+not Var, Val, Simple, Extended  9	0.039 11852
+Var, Val, Simple, Extended      9	0.0010 140
+
+
+
+
+BOARD 0
+Var, not Val, Simple, Extended  0	0.063 357
+Var, Val, Simple, Extended      0	0.074 359
+
+BOARD 1
+Var, not Val, Simple, Extended  1	0.0060 53
+Var, Val, Simple, Extended      1	0.073 53
+
+BOARD 2
+Var, not Val, Simple, Extended  2	0.07 1342
+Var, Val, Simple, Extended      2	0.097 2177
+
+BOARD 3
+Var, not Val, Simple, Extended  3	0.0060 26
+Var, Val, Simple, Extended      3	0.039 42
+
+BOARD 4
+Var, not Val, Simple, Extended  4	0.0020 43
+Var, Val, Simple, Extended      4	0.0090 43
+
+BOARD 5
+Var, not Val, Simple, Extended  5	0.0070 24
+Var, Val, Simple, Extended      5	0.0010 28
+
+BOARD 6
+Var, not Val, Simple, Extended  6	0.0 35
+Var, Val, Simple, Extended      6	0.0010 46
+
+BOARD 7
+Var, not Val, Simple, Extended  7	0.0020 81
+Var, Val, Simple, Extended      7	0.0020 185
+
+BOARD 8
+Var, not Val, Simple, Extended  8	0.0010 63
+Var, Val, Simple, Extended      8	0.0010 33
+
+BOARD 9
+Var, not Val, Simple, Extended  9	0.0030 316
+Var, Val, Simple, Extended      9	0.0040 140
+
+
+
+
+BOARD 0
+Var, Val, not Simple, Extended  0	0.072 359
+Var, Val, Simple, Extended      0	0.047 359
+
+BOARD 1
+Var, Val, not Simple, Extended  1	0.015 54
+Var, Val, Simple, Extended      1	0.0060 53
+
+BOARD 2
+Var, Val, not Simple, Extended  2	0.074 2178
+Var, Val, Simple, Extended      2	0.022 2177
+
+BOARD 3
+Var, Val, not Simple, Extended  3	0.0070 44
+Var, Val, Simple, Extended      3	0.0020 42
+
+BOARD 4
+Var, Val, not Simple, Extended  4	0.0010 43
+Var, Val, Simple, Extended      4	0.0020 43
+
+BOARD 5
+Var, Val, not Simple, Extended  5	0.0050 35
+Var, Val, Simple, Extended      5	0.0010 28
+
+BOARD 6
+Var, Val, not Simple, Extended  6	0.0020 47
+Var, Val, Simple, Extended      6	0.0010 46
+
+BOARD 7
+Var, Val, not Simple, Extended  7	0.0020 187
+Var, Val, Simple, Extended      7	0.0020 185
+
+BOARD 8
+Var, Val, not Simple, Extended  8	0.0010 33
+Var, Val, Simple, Extended      8	0.0010 33
+
+BOARD 9
+Var, Val, not Simple, Extended  9	0.0010 140
+Var, Val, Simple, Extended      9	0.0020 140
+
+
+
+
+
+BOARD 0
+Var, Val, Simple, not Extended  0	0.14 990
+Var, Val, Simple, Extended      0	0.041 359
+
+BOARD 1
+Var, Val, Simple, not Extended  1	0.0020 63
+Var, Val, Simple, Extended      1	0.0040 53
+
+BOARD 2
+Var, Val, Simple, not Extended  2	0.0080 659
+Var, Val, Simple, Extended      2	0.056 2177
+
+BOARD 3
+Var, Val, Simple, not Extended  3	0.0030 280
+Var, Val, Simple, Extended      3	0.0050 42
+
+BOARD 4
+Var, Val, Simple, not Extended  4	0.0010 51
+Var, Val, Simple, Extended      4	0.014 43
+
+BOARD 5
+Var, Val, Simple, not Extended  5	0.03 1776
+Var, Val, Simple, Extended      5	0.0020 28
+
+BOARD 6
+Var, Val, Simple, not Extended  6	0.0050 575
+Var, Val, Simple, Extended      6	0.0020 46
+
+BOARD 7
+Var, Val, Simple, not Extended  7	0.0070 1021
+Var, Val, Simple, Extended      7	0.0020 185
+
+BOARD 8
+Var, Val, Simple, not Extended  8	0.0010 69
+Var, Val, Simple, Extended      8	0.0010 33
+
+BOARD 9
+Var, Val, Simple, not Extended  9	0.0050 135
+Var, Val, Simple, Extended      9	0.0020 140

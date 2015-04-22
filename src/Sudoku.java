@@ -12,7 +12,7 @@ public class Sudoku
 	
 	
 	/*
-	 * Constructors
+	 * Constructor
 	 */
 	public Sudoku(int[][] boardToSolve, int d)
 	{
@@ -34,7 +34,9 @@ public class Sudoku
 			}
 		}
 	}
-	
+	/*
+	 * Empty Constructor
+	 */
 	public Sudoku(int d)
 	{
 		dim = d;
@@ -45,7 +47,9 @@ public class Sudoku
 			}
 		}
 	}
-	
+	/*
+	 * Solves sudokus using sheer brute force
+	 */
 	public boolean bruteSolve()
 	{
 		//if (++counter % 50000 == 0) fancyPrint();
@@ -95,7 +99,9 @@ public class Sudoku
 		if (!isSolution()) {System.out.println("NOT A SOLUTION !!!"); return false;}
 		else {/*System.out.println("OK SOLUTION !!!");*/ return true;}
 	}
-	
+	/*
+	 * Solves sudokus recursively with variable heuristics and/or value heuristics
+	 */
 	public boolean solve(boolean varHeuristic, boolean valHeuristic)
 	{
 		//fancyPrint();
@@ -195,6 +201,7 @@ public class Sudoku
 	 */
 	public boolean full()
 	{
+		// checks if board is full
 		//return (assignments == dim * dim * dim * dim);
 		for (int i = 0; i < dim*dim; i++)
 		{
@@ -202,7 +209,9 @@ public class Sudoku
 		}
 		return true;
 	}
-	
+	/*
+	 * value heuristics
+	 */
 	public int valHeuristic(Variable curr, int i)
 	{
 
@@ -213,7 +222,9 @@ public class Sudoku
 		}
 		return count;
 	}
-
+	/*
+	 * checks if board is valid
+	 */
 	public boolean isValid(int x, int y)
 	{
 		DistinctSet test = new DistinctSet(dim*dim);
@@ -242,7 +253,9 @@ public class Sudoku
 		test.clear();
 		return true;
 	}
-	
+	/*
+	 * returns a collection of variables that are in same row, column or section as v
+	 */
 	public Collection<Variable> neighbours(Variable v)
 	{
 		Collection<Variable> set = new ArrayList<Variable>();
@@ -263,7 +276,9 @@ public class Sudoku
 		
 		return set;
 	}
-	
+	/*
+	 * returns a collection of variables that have not been assigned yet
+	 */
 	public Collection<Variable> freeNeighbours(Variable v)
 	{
 		Collection<Variable> set = new ArrayList<Variable>();
@@ -284,7 +299,9 @@ public class Sudoku
 		
 		return set;
 	}
-	
+	/*
+	 * Checks if a solution is valid
+	 */
 	public boolean isSolution()
 	{
 
@@ -316,7 +333,6 @@ public class Sudoku
 		}
 		return true;
 	}
-	
 	/*
 	 * Inference functions 
 	 */
@@ -343,10 +359,11 @@ public class Sudoku
 		}
 		if (more) extendedInference(); 
 	}
-	
+	/*
+	 * Iterate through the free spots and try to restrict the board some more
+	 */
 	private boolean extendedInference()
 	{
-		// iterate through the free spots and try to restrict the board more
 		boolean hasChanged = false;
 		boolean changes = true;
 		while (changes) {
@@ -423,7 +440,9 @@ public class Sudoku
 		}
 		return hasChanged;
 	}
-	
+	/*
+	 * Assigns values to squares if domain size is one
+	 */
 	private Variable[][] simpleInference()
 	{
 		Sudoku nboard = new Sudoku(dim);
@@ -458,7 +477,6 @@ public class Sudoku
 		}
 		return nboard.board;
 	}
-	
 	/*
 	 * Print functions 
 	 */
@@ -483,16 +501,15 @@ public class Sudoku
 		printEdge(2 * dim * dim + extraEdge);
 		System.out.println();
 	}
-	
 	private void printEdge(int n)
 	{
 		System.out.print(" ");
 		for (int i = 0; i < n; i++) System.out.print("-");
 		System.out.println();
 	}
-	
-	
-	
+	/*
+	 * Inner class for identifying duplicate numbers
+	 */
 	static public class DistinctSet
 	{
 		boolean[] set;
@@ -519,6 +536,4 @@ public class Sudoku
 			for (int i = 0; i < set.length; i++) set[i] = false;
 		}
 	}
-	
-	
 }

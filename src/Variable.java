@@ -4,10 +4,11 @@ public class Variable
 {
 	int val;
 	int dim;
-	//boolean[] domain;
 	int[] domain;
 	int x, y;
-	
+	/*
+	 * Constructors
+	 */
 	public Variable(int dim, int val, int x, int y)
 	{
 		this.dim = dim;
@@ -21,7 +22,6 @@ public class Variable
 		this.x = x;
 		this.y = y;
 	}
-
 	public Variable(Variable var)
 	{
 		this.val = var.val;
@@ -32,7 +32,9 @@ public class Variable
 		this.x = var.x;
 		this.y = var.y;
 	}
-	
+	/*
+	 * returns a collection of this variables domain
+	 */
 	public Collection<Integer> domain()
 	{
 		Collection<Integer> set = new ArrayList<Integer>();
@@ -40,13 +42,17 @@ public class Variable
 		for (int i = 0; i < domain.length; i++) if (domain[i] > 0) set.add(i + 1);
 		return set;
 	}
-	
+	/*
+	 * check if n is ok 
+	 */
 	public boolean isOK(int n)
 	{
 		if (n > domain.length || n < 1) return false;
 		return domain[n-1] > 0;
 	}
-	
+	/*
+	 * restrict or allow a number in a variables domain
+	 */
 	public void restrict(int n)
 	{
 		//domain[n-1] = false;
@@ -57,7 +63,9 @@ public class Variable
 		//domain[n-1] = true;
 		domain[n - 1] = domain[n - 1] + 1;
 	}
-	
+	/*
+	 * copy Variable
+	 */
 	public Variable copy()
 	{
 		//System.out.println("copy");

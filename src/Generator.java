@@ -13,49 +13,9 @@ public class Generator {
 	public Generator(int d) {
 		dim = d;
 	}
-	
-	/*public static VarBoard getRandomBoard(int dim) {
-		VarBoard board = new VarBoard(dim);
-		VarBoard cpy;
-		Random rand = new Random();
-		List<Pair<Pair<Integer,Integer>,Integer>> invalids = new ArrayList<Pair<Pair<Integer,Integer>,Integer>>();
-		// Fill an empty board with 20 random numbers in random positions.
-		int n = 0;
-		if (dim == 3) n = 25;
-		if (dim == 4) n = 100;
-		if (dim == 5) n = 250;
-		for (int i = 0; i < n; i++) {
-			System.out.println("i: " + i);
-			int x, y, value;
-			boolean solvable;
-			do {
-				solvable = false;
-				x = rand.nextInt(dim*dim); 
-				y = rand.nextInt(dim*dim);
-				Pair<Integer,Integer> pos = new Pair<Integer,Integer>(x,y);
-				value = rand.nextInt(dim*dim) + 1;
-				Pair<Pair<Integer,Integer>,Integer> trio = new Pair<Pair<Integer,Integer>,Integer>(pos,value);
-				if (!invalids.contains(trio)) {
-					if (board.board[x][y].val == 0) {
-						if (board.put(x, y, value)) {
-							board.fancyPrint();
-							cpy = new VarBoard(board, dim);
-							boolean solved = false;
-							solved = cpy.newSolve();
-							if (solved) solvable = true;
-							else {
-								board.put(x, y, 0);
-								invalids.add(trio);
-							}
-						}
-						else board.put(x,  y,  0);
-					}
-				}
-			} while (!solvable);
-		}
-		return board;
-	}*/
-
+	/*
+	 * Hard Coded Hard Core
+	 */
     static int [][][] board3 = {
         {{0, 0, 0, 0, 0, 2, 0, 0, 6}, 
 		{0, 4, 0, 0, 9, 0, 0, 0, 8}, 
@@ -514,11 +474,9 @@ public class Generator {
 			{16, 0,13, 0, 0, 0,15, 0, 0, 9,19,23, 0,14, 0, 0, 3, 0, 0, 8, 0, 0, 0, 2,25},
 			{ 0, 0, 1, 0, 2,16, 0, 0,10, 0,24, 0, 7, 0, 0,19,23, 0,14,17, 0, 0, 6, 0, 0}
 		}};
-
-
-
-
-	
+	/*
+	 * gets a hardcoded sudoku by index
+	 */
 	static public int[][] get(int size, int index)
 	{
 		if (size == 3) return board3[index];
